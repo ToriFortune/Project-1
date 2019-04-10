@@ -13,9 +13,9 @@ Github: https://github.com/iaiqbal
 LinkedIn: https://www.linkedin.com/in/ibrahimiqbal7531/
 
 Developer 2: Tori Fortune
-Portfolio: 
-Github
-LinkedIn
+Portfolio: https://torifortune.github.io/toriassignmentone.github.io/
+Github: https://github.com/ToriFortune
+LinkedIn: https://www.linkedin.com/in/t-r-tori-o-3275027b
 
 Developer 3: Angela Pizarras
 Portfolio: https://apizarras.github.io/Responsive-Portfolio/portfolio.html
