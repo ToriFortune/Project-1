@@ -4,9 +4,91 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Musify</title>
+    <script src="https://www.gstatic.com/firebasejs/5.9.3/firebase.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="assets/javascript/script.js"></script>
+        <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-    <h1>Hi</h1>
+    
+    <div class="jumbotron" style="background-color:#00F3FF">
+            <h1 class="display-4">Welcome to Musify</h1>
+            <p class="lead">Allow us to create a playlist framed towards your musical preferences.</p>
+            <hr class="my-4">
+            <p>Pick any 3 genres and we'll hook you up!</p>
+    </div>
+
+    <div class = "container">
+        <div class="row">
+
+            <div class="column">
+                <div class="card" style="width: 19rem;">
+                    <img class="card-img-top" src="https://mediad.publicbroadcasting.net/p/wksu/files/styles/x_large/public/201712/Classical-Music-Wallpaper.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <a href="#" class="btn btn-outline-dark" id = "classical-btn">Classical</a>
+                    </div>
+                </div>
+            </div>
+        
+
+            <div class="column">
+                <div class="card" style="width: 19rem;">
+                    <img class="card-img-top"
+                        src="https://pixel.nymag.com/imgs/daily/vulture/2017/12/best-of-2017/11-yic-pop-essay.w1200.h630.jpg"
+                        alt="Card image cap">
+                    <div class="card-body">
+                        <a href="#" class="btn btn-outline-dark" id = "pop-btn">Pop</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="card" style="width: 19rem;">
+                    <img class="card-img-top"
+                        src="https://s26162.pcdn.co/wp-content/uploads/2019/03/shabazz-hiphop_1024.jpg"
+                        alt="Card image cap">
+                    <div class="card-body">
+                        <a href="#" class="btn btn-outline-dark" id="hiphop-btn">Hip-Hop</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="column">
+                <div class="card" style="width: 19rem;">
+                    <img class="card-img-top" src="https://media.altpress.com/uploads/2018/07/EDM_deadmau5.jpg"
+                        alt="Card image cap">
+                    <div class="card-body">
+                        <a href="#" class="btn btn-outline-dark" id = "edm-btn">EDM</a>
+                    </div>
+                </div>
+            </div>
+
+                <div class="column">
+                    <div class="card" style="width: 19rem;">
+                        <img class="card-img-top" src="https://static.wixstatic.com/media/afd87a_4f9da09876e946df940e6706cd59bcd7~mv2_d_1807_1807_s_2.jpeg"
+                                    alt="Card image cap">
+                        <div class="card-body">
+                            <a href="#" class="btn btn-outline-dark" id="country-btn">Country</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column">
+                    <div class="card" style="width: 19rem;">
+                        <img class="card-img-top"
+                            src="http://www.bbc.co.uk/staticarchive/ad0957f8dff28c5adcc47e376b931cfd54925dd1.jpg"
+                            alt="Card image cap">
+                        <div class="card-body">
+                            <a href="#" class="btn btn-outline-dark" id = "rock-btn">Rock</a>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
 </body>
 </html>
