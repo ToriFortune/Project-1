@@ -1,0 +1,24 @@
+.jumbotron {
+    text-align: center;
+    color: white;
+}
+
+.card-title {
+    text-align: center;
+}
+
+.column {
+    margin: 10px;
+}
+
+.card-img-top {
+    border-radius: 25px;
+  
+  
+  width: 200px;
+  height: 150px; 
+}
+
+.card-body {
+    text-align: center;
+}
