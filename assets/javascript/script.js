@@ -27,3 +27,16 @@ connected.on("value", function(snapshot) {
 connections.on("value", function(snapshot) {
     $("#connections").text(snapshot.numChildren());
 })
+
+// add event listener too play audio, will connect to elements in html
+
+// <button onclick="playAudio()" type="button">Play Audio</button>
+// <button onclick="pauseAudio()" type="button">Pause Audio</button> 
+
+var song=document.getElementById("audiohtml");
+function playAudio(){
+song.play();
+}
+funtion pauseAudio(){
+  song.pause();
+}
