@@ -27,3 +27,19 @@ connected.on("value", function(snapshot) {
 connections.on("value", function(snapshot) {
     $("#connections").text(snapshot.numChildren());
 })
+
+//query napster for top playlist
+const playlistQueryUrl = "https://api.napster.com/v2.1/tracks/top?apikey=ZTk2YjY4MjMtMDAzYy00MTg4LWE2MjYtZDIzNjJmMmM0YTdm"
+
+  $.ajax({
+    url: playlistQueryUrl,
+    method: "GET"
+  }).then(function(response){
+    trackDetails = response;
+    console.log("this is what napster returns", response);
+    console.log("mp3 link", response.tracks[0].previewURL);
+    })
+
+
+
+
