@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-s
-=======
 //initialize fireBase
   const config = {
     apiKey: "AIzaSyDdjDReSUF_rEyL8yMP9sPXsEiIbhMEndk",
@@ -46,4 +43,3 @@ const playlistQueryUrl = "https://api.napster.com/v2.1/tracks/top?apikey=ZTk2YjY
 
 
 
->>>>>>> 2db49f9bb8e9c5586e78a794362895f0388fd944
