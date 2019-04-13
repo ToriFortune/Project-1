@@ -28,6 +28,7 @@ connections.on("value", function(snapshot) {
     $("#connections").text(snapshot.numChildren());
 })
 
+<<<<<<< HEAD
 //query napster for top playlist
 const playlistQueryUrl = "https://api.napster.com/v2.1/tracks/top?apikey=ZTk2YjY4MjMtMDAzYy00MTg4LWE2MjYtZDIzNjJmMmM0YTdm"
 
@@ -43,3 +44,17 @@ const playlistQueryUrl = "https://api.napster.com/v2.1/tracks/top?apikey=ZTk2YjY
 
 
 
+=======
+// add event listener too play audio, will connect to elements in html
+
+// <button onclick="playAudio()" type="button">Play Audio</button>
+// <button onclick="pauseAudio()" type="button">Pause Audio</button> 
+
+var song=document.getElementById("audiohtml");
+function playAudio(){
+song.play();
+}
+function pauseAudio(){
+  song.pause();
+}
+>>>>>>> tori
