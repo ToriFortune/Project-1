@@ -37,6 +37,6 @@ var song=document.getElementById("audiohtml");
 function playAudio(){
 song.play();
 }
-funtion pauseAudio(){
+function pauseAudio(){
   song.pause();
 }
