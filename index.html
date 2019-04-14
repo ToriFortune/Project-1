@@ -8,13 +8,12 @@
     <script src="https://www.gstatic.com/firebasejs/5.9.3/firebase.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    
-    <script type="text/javascript" src="assets/javascript/script.js"></script>
     <script type="text/javascript" src="assets/javascript/napster.min.js"></script>
     <script src="https://api.napster.com/v2/streaming-player.js" type="text/javascript"/>
     </script>
-        <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.2/handlebars.min.js"></script>
 </head>
 <body>
     
@@ -24,6 +23,30 @@
             <hr class="my-4">
             <p>Pick any 3 genres and we'll hook you up!</p>
     </div>
+    <div class="container" id="login">
+        <h1 id="heading">User Login</h1>
+        <div id="login-section">
+          <p>Log in with your Napster account.</p>
+          <button class="btn btn-primary signin" id="btn-login">Login</button>
+        </div>
+        <div id="result"></div>
+    </div>
+    
+    <script id="result-template" type="text/x-handlebars-template">
+        <dl>
+          <img src="{{avatar}}">
+          <dt>User Name</dt>
+          <dd>{{realName}}</dd>
+          <dt>Display Name</dt>
+          <dd>{{screenName}}</dd>
+          <dt>Followers</dt>
+          <dd>{{followerCount}}</dd>
+          <dt>Profile</dt>
+          <dd><a href="https://app.napster.com/members/{{screenName}}" target="_blank">https://app.napster.com/members/{{screenName}}</a></dd>
+          <dt>Napster ID</dt>
+          <dd>{{id}}</dd>
+        </dl>
+    </script>
 
     <div>Number of Connections: </div>
     <div id="connections"></div>
@@ -132,6 +155,7 @@
     </script>
     
     <script src="https://www.gstatic.com/firebasejs/5.9.4/firebase.js"></script>
+    <script type="text/javascript" src="assets/javascript/script.js"></script>
 
 </body>
 </html>
