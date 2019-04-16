@@ -89,7 +89,19 @@ const playlistQueryUrl = "https://api.napster.com/v2.2/genres/g.397/tracks/top?a
     url: playlistQueryUrl,
     method: "GET"
   }).then(function(response){
-    trackDetails = response;
+    trackDetails = response.tracks;
     console.log("this is what napster returns", response);
-    console.log("mp3 link", response.tracks[0].previewURL)
+    for (i=0; i<trackDetails.length; i++) {
+    let songTitle = (response.tracks[i].name);
+    $("#previewURL").append("Song Title: " + songTitle);
+    let trackId = (response.tracks[i].id);
+    console.log(response.tracks[i].id);
+    $("#previewURL").append("this is the trackId: " + trackId);
+    let genre = (response.tracks[i].links.genres.id);
+    console.log("this is the genre id: " + response.tracks[i].links.genres.id);
+    let previewURL = (response.tracks[i].previewURL);
+    $("#previewURL").append("this is the URL" + previewURL + "<br>");
+    console.log("mp3 link", response.tracks[i].previewURL);
+    }
   });
+
