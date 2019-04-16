@@ -54,30 +54,7 @@ function fetchUserData (accessToken) {
   });	
 }
 
-function login() {
-	window.addEventListener('message',(event) => {
-    var hash = JSON.parse(event.data);
-    if (hash.type === 'access_token') {
-      fetchUserData(hash.access_token)
-      	.then((data) => {
-        	$loginSection.hide();
-          $result.html(resultsTemplate(data.me));
-          $result.show();
-        });
-    }
-  }, false);
- 
-	window.open(
-  	`${oauthURL}&redirect_uri=${REDIRECT_URI}`,
-  	'Napster',
-    `menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=${width},height=${height}, left=${left}`
-  );
-}
 
-$loginButton.click(() => {
- login();
- console.log("login button was clicked");
-})
 //query napster for top playlist
 console.log("this is code line 82");
 const playlistQueryUrl = "https://api.napster.com/v2.2/tracks/top?apikey=ZTk2YjY4MjMtMDAzYy00MTg4LWE2MjYtZDIzNjJmMmM0YTdm"
@@ -89,4 +66,5 @@ const playlistQueryUrl = "https://api.napster.com/v2.2/tracks/top?apikey=ZTk2YjY
     trackDetails = response;
     console.log("this is what napster returns", response);
     console.log("mp3 link", response.tracks[0].previewURL);
-    });
+
+
