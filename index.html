@@ -161,6 +161,34 @@
     
     <script src="https://www.gstatic.com/firebasejs/5.9.4/firebase.js"></script>
     <script type="text/javascript" src="assets/javascript/script.js"></script>
+        <script>
+            Napster.init({
+                    consumerKey: 'ZTk2YjY4MjMtMDAzYy00MTg4LWE2MjYtZDIzNjJmMmM0YTdm',
+                    isHTML5Compatible: true,
+                    version: 'v2.2',
+                    player: 'player-frame'
+                    // player: "aside"
+                });
+        
+        
+            Napster.member.set({
+                    accessToken: 'oauth access token',
+                    refreshToken: 'oauth refresh token'
+                });
+        
+                Napster.player.on('ready', function (e) {
+                    Napster.member.set({ accessToken: 'oauth access token' }); // If not set earlier
+                    Napster.player.auth();
+                });
+        
+        
+                Napster.player.play('Tra.323637935');
+        
+        
+            </script>
+            
+            <script src="https://www.gstatic.com/firebasejs/5.9.4/firebase.js"></script>
+            <script type="text/javascript" src="assets/javascript/script.js"></script>
 
 </body>
 </html>
