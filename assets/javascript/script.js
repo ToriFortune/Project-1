@@ -26,11 +26,38 @@ connected.on("value", function(snapshot) {
 //see how many connections there are to the app
 connections.on("value", function(snapshot) {
     $("#connections").text(snapshot.numChildren());
-})
+});
 
-<<<<<<< HEAD
+//napster user login
+const width = 700;
+const height = 400;
+const left = (screen.width / 2) - (width / 2);
+// const top = (screen.height / 2) - (height / 2);
+const $loginButton = $('#btn-login');
+const $loginSection = $('#login-section');
+const $result = $('#result');
+const templateSource = document.getElementById('result-template').innerHTML
+const resultsTemplate = Handlebars.compile(templateSource);
+
+const napsterAPI = 'https://api.napster.com';
+const APIKEY = 'ZmNiNDU0OGQtZDBhYS00OWI4LTg3ZWItZjc2MTkyY2EwNzgy';
+const oauthURL = `${napsterAPI}/oauth/authorize?client_id=${APIKEY}&response_type=code`;
+
+const REDIRECT_URI = 'https://iaiqbal.github.io/Project-1/';
+
+function fetchUserData (accessToken) {
+	return $.ajax({
+  	url: `${napsterAPI}/v2.1/me`,
+    headers: {
+      'Authorization': 'Bearer ' + accessToken
+    }
+  });	
+}
+
+
 //query napster for top playlist
-const playlistQueryUrl = "https://api.napster.com/v2.1/tracks/top?apikey=ZTk2YjY4MjMtMDAzYy00MTg4LWE2MjYtZDIzNjJmMmM0YTdm"
+console.log("this is code line 82");
+const playlistQueryUrl = "https://api.napster.com/v2.2/tracks/top?apikey=ZTk2YjY4MjMtMDAzYy00MTg4LWE2MjYtZDIzNjJmMmM0YTdm"
 
   $.ajax({
     url: playlistQueryUrl,
@@ -39,22 +66,5 @@ const playlistQueryUrl = "https://api.napster.com/v2.1/tracks/top?apikey=ZTk2YjY
     trackDetails = response;
     console.log("this is what napster returns", response);
     console.log("mp3 link", response.tracks[0].previewURL);
-    })
 
 
-
-
-=======
-// add event listener too play audio, will connect to elements in html
-
-// <button onclick="playAudio()" type="button">Play Audio</button>
-// <button onclick="pauseAudio()" type="button">Pause Audio</button> 
-
-var song=document.getElementById("audiohtml");
-function playAudio(){
-song.play();
-}
-function pauseAudio(){
-  song.pause();
-}
->>>>>>> tori
