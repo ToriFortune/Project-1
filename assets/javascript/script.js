@@ -81,7 +81,7 @@ $loginButton.click(() => {
 
 //query napster for top playlist
 console.log("this is code line 82");
-const playlistQueryUrl = "https://api.napster.com/v2.2/tracks/top?apikey=ZTk2YjY4MjMtMDAzYy00MTg4LWE2MjYtZDIzNjJmMmM0YTdm"
+const playlistQueryUrl = "https://api.napster.com/v2.2/genres/g.397/tracks/top?apikey=ZTk2YjY4MjMtMDAzYy00MTg4LWE2MjYtZDIzNjJmMmM0YTdm"
 
   $.ajax({
     url: playlistQueryUrl,
