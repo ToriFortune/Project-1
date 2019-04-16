@@ -28,6 +28,8 @@ connections.on("value", function(snapshot) {
     $("#connections").text(snapshot.numChildren());
 });
 
+new WOW().init();
+
 //napster user login
 const width = 700;
 const height = 400;
