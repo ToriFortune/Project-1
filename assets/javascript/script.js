@@ -28,6 +28,8 @@ connections.on("value", function(snapshot) {
     $("#connections").text(snapshot.numChildren());
 });
 
+new WOW().init();
+
 //napster user login
 const width = 700;
 const height = 400;
@@ -81,7 +83,7 @@ $loginButton.click(() => {
 
 //query napster for top playlist
 console.log("this is code line 82");
-const playlistQueryUrl = "https://api.napster.com/v2.2/genres/g.397/tracks/top?apikey=ZTk2YjY4MjMtMDAzYy00MTg4LWE2MjYtZDIzNjJmMmM0YTdm"
+const playlistQueryUrl = "https://api.napster.com/v2.2/genres/g.397/tracks/top?apikey=ZmNiNDU0OGQtZDBhYS00OWI4LTg3ZWItZjc2MTkyY2EwNzgy"
 
   $.ajax({
     url: playlistQueryUrl,

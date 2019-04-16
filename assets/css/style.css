@@ -23,3 +23,33 @@
     text-align: center;
     /* test */
 }
+
+#numofconnections {
+    display: none;
+}
+
+#connections {
+    display: none;
+}
+
+#login {
+    margin: 0 auto;
+    width: 300px;
+}
+
+#heading {
+    text-align: center;
+}
+
+#login-section {
+    text-align: center;
+}
+
+.container {
+    font-family: 'Quattrocento Sans', sans-serif;
+}
+
+.jumbotron {
+    font-family: 'Quattrocento Sans', sans-serif;
+}
+
