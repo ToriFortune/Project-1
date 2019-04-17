@@ -84,6 +84,8 @@ $loginButton.click(() => {
 //query napster for genre list and push to firebase
 const genreQueryUrl = "https://api.napster.com/v2.2/genres?apikey=ZmNiNDU0OGQtZDBhYS00OWI4LTg3ZWItZjc2MTkyY2EwNzgy"
 
+const genreId = "";
+const genreName = "";
 $.ajax({
   url: genreQueryUrl,
   method: "GET"
@@ -92,9 +94,18 @@ console.log("this is the response: " + data.genres[0].id);
 let genres = (data.genres);
 for (j=0; j<genres.length; j++) {
   console.log(genres[j].id);
+  let genreId = genres[j].id;
   console.log(genres[j].name);
+  let genreName = genres[j].name;
+  
+  database.ref("/genres").push({
+    genreId: genreId,
+    genreName: genreName
+  })
 }
 })
+
+
 
 
 //query napster for top playlist
