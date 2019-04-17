@@ -81,8 +81,23 @@ $loginButton.click(() => {
  console.log("login button was clicked");
 })
 
+//query napster for genre list and push to firebase
+const genreQueryUrl = "https://api.napster.com/v2.2/genres?apikey=ZmNiNDU0OGQtZDBhYS00OWI4LTg3ZWItZjc2MTkyY2EwNzgy"
+
+$.ajax({
+  url: genreQueryUrl,
+  method: "GET"
+}).then(function(data){
+console.log("this is the response: " + data.genres[0].id);
+let genres = (data.genres);
+for (j=0; j<genres.length; j++) {
+  console.log(genres[j].id);
+  console.log(genres[j].name);
+}
+})
+
+
 //query napster for top playlist
-console.log("this is code line 82");
 const playlistQueryUrl = "https://api.napster.com/v2.2/genres/g.397/tracks/top?apikey=ZmNiNDU0OGQtZDBhYS00OWI4LTg3ZWItZjc2MTkyY2EwNzgy"
 
   $.ajax({
@@ -97,11 +112,13 @@ const playlistQueryUrl = "https://api.napster.com/v2.2/genres/g.397/tracks/top?a
     let trackId = (response.tracks[i].id);
     console.log(response.tracks[i].id);
     $("#previewURL").append("this is the trackId: " + trackId);
-    let genre = (response.tracks[i].links.genres.id);
-    console.log("this is the genre id: " + response.tracks[i].links.genres.id);
     let previewURL = (response.tracks[i].previewURL);
     $("#previewURL").append("this is the URL" + previewURL + "<br>");
     console.log("mp3 link", response.tracks[i].previewURL);
+    // let genre = (response.tracks.links.genres.id);
+    // for (j=0; j<genre.length; j++){
+    // console.log("this is the genre id: " + genre[j]);
+    // }
     }
   });
 
