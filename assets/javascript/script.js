@@ -158,6 +158,8 @@ const playlistQueryUrl = "https://api.napster.com/v2.2/genres/" + genreId + "/tr
         method:"GET"
     }).then(function(lyrics){
         console.log(lyrics);
+        $("#lyricHeader").text(songTitle)
+         $("#lyricZone").text(lyrics);
     });
     }
   });
