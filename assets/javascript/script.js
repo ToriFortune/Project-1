@@ -1,3 +1,12 @@
+//genre values
+const classical = "Classical";
+const pop = "Pop";
+const hipHop = "Rap/Hip-Hop";
+const rock = "Rock";
+const edm = "Electronic";
+const country = "Country";
+let genreId = "";
+
 //initialize fireBase
   const config = {
     apiKey: "AIzaSyDdjDReSUF_rEyL8yMP9sPXsEiIbhMEndk",
@@ -31,61 +40,59 @@ connections.on("value", function(snapshot) {
 // new WOW().init();
 
 //napster user login
-const width = 700;
-const height = 400;
-const left = (screen.width / 2) - (width / 2);
-// const top = (screen.height / 2) - (height / 2);
-const $loginButton = $('#btn-login');
-const $loginSection = $('#login-section');
-const $result = $('#result');
-const templateSource = document.getElementById('result-template').innerHTML
-const resultsTemplate = Handlebars.compile(templateSource);
+// const width = 700;
+// const height = 400;
+// const left = (screen.width / 2) - (width / 2);
+// // const top = (screen.height / 2) - (height / 2);
+// const $loginButton = $('#btn-login');
+// const $loginSection = $('#login-section');
+// const $result = $('#result');
+// const templateSource = document.getElementById('result-template').innerHTML
+// const resultsTemplate = Handlebars.compile(templateSource);
 
-const napsterAPI = 'https://api.napster.com';
-const APIKEY = 'ZmNiNDU0OGQtZDBhYS00OWI4LTg3ZWItZjc2MTkyY2EwNzgy';
-const oauthURL = `${napsterAPI}/oauth/authorize?client_id=${APIKEY}&response_type=code`;
+// const napsterAPI = 'https://api.napster.com';
+// const APIKEY = 'ZmNiNDU0OGQtZDBhYS00OWI4LTg3ZWItZjc2MTkyY2EwNzgy';
+// const oauthURL = `${napsterAPI}/oauth/authorize?client_id=${APIKEY}&response_type=code`;
 
-const REDIRECT_URI = 'https://iaiqbal.github.io/Project-1/';
+// const REDIRECT_URI = 'https://iaiqbal.github.io/Project-1/';
 
-function fetchUserData (accessToken) {
-	return $.ajax({
-  	url: `${napsterAPI}/v2.1/me`,
-    headers: {
-      'Authorization': 'Bearer ' + accessToken
-    }
-  });	
-}
+// function fetchUserData (accessToken) {
+// 	return $.ajax({
+//   	url: `${napsterAPI}/v2.1/me`,
+//     headers: {
+//       'Authorization': 'Bearer ' + accessToken
+//     }
+//   });	
+// }
 
-function login() {
-	window.addEventListener('message',(event) => {
-    var hash = JSON.parse(event.data);
-    if (hash.type === 'access_token') {
-      fetchUserData(hash.access_token)
-      	.then((data) => {
-        	$loginSection.hide();
-          $result.html(resultsTemplate(data.me));
-          $result.show();
-        });
-    }
-  }, false);
+// function login() {
+// 	window.addEventListener('message',(event) => {
+//     var hash = JSON.parse(event.data);
+//     if (hash.type === 'access_token') {
+//       fetchUserData(hash.access_token)
+//       	.then((data) => {
+//         	$loginSection.hide();
+//           $result.html(resultsTemplate(data.me));
+//           $result.show();
+//         });
+//     }
+//   }, false);
  
-	window.open(
-  	`${oauthURL}&redirect_uri=${REDIRECT_URI}`,
-  	'Napster',
-    `menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=${width},height=${height}, left=${left}`
-  );
-}
+// 	window.open(
+//   	`${oauthURL}&redirect_uri=${REDIRECT_URI}`,
+//   	'Napster',
+//     `menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=${width},height=${height}, left=${left}`
+//   );
+// }
 
-$loginButton.click(() => {
- login();
- console.log("login button was clicked");
-})
+// $loginButton.click(() => {
+//  login();
+//  console.log("login button was clicked");
+// })
 
 //query napster for genre list and push to firebase
 const genreQueryUrl = "https://api.napster.com/v2.2/genres?apikey=ZmNiNDU0OGQtZDBhYS00OWI4LTg3ZWItZjc2MTkyY2EwNzgy"
 
-const genreId = "";
-const genreName = "";
 $.ajax({
   url: genreQueryUrl,
   method: "GET"
@@ -97,15 +104,23 @@ for (j=0; j<genres.length; j++) {
   let genreId = genres[j].id;
   console.log(genres[j].name);
   let genreName = genres[j].name;
-  
-  database.ref("/genres").push({
-    genreId: genreId,
-    genreName: genreName
-  })
-}
-})
+  database.ref("genres").set({
+    genreName: genreName,
+      });
+      database.ref("/genres/genreName").set({
+        genreId: genreId
+      })
+    };   
+  });
 
-
+$("#classical-btn").on ("click", function(event) {
+  let genreName = database.ref("/genres/genreName");
+      if(database.genres.genreName===""){
+    Classical = database.ref("/genres/genreName/genreId");
+    console.log(database.genres.genreName.genreId);
+    }
+  console.log(genreId);
+});
 
 
 //query napster for top playlist
