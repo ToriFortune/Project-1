@@ -1,11 +1,4 @@
-//genre values
-const classical = "Classical";
-const pop = "Pop";
-const hipHop = "Rap/Hip-Hop";
-const rock = "Rock";
-const edm = "Electronic";
-const country = "Country";
-// let genreId = "";
+let genreId;
 
 //initialize fireBase
   const config = {
@@ -116,28 +109,16 @@ for (j=0; j<genres.length; j++) {
       $("#edm-btn").attr("genreId", genreId);
             } else if (genreName === "Country") {
     $("#country-btn").attr("genreId", genreId);
-    }
-
-  //if I change the line below to .set, it only sets one genreName and genreId, but nothing else from the response array
-  database.ref("genres").push({
-    genreName: genreName,
-    genreId: genreId
-      });
-    };   
-  });
-
-$("#classical-btn").on ("click", function(event) {
-  // let currentgenre = database.ref("/genres/genreName");
-  //     if(database.genres.genreName===""){
-  //   Classical = database.ref("/genres/genreName/genreId");
-  //   console.log(database.genres.genreName.genreId);
-  //   }
-  // console.log(genreId);
+    };
+  }
 });
 
+//on genre 'a' click grab the genreId attribute and use it in the query URL
+  $("a").on("click", function(event){
+    genreId = $(this).attr("genreId");
+    console.log(genreId);
 
-let genreId = "g.156";
-//query napster for top playlist based on genre
+//query napster for top tracks based on genre
 const playlistQueryUrl = "https://api.napster.com/v2.2/genres/" + genreId + "/tracks/top?apikey=ZmNiNDU0OGQtZDBhYS00OWI4LTg3ZWItZjc2MTkyY2EwNzgy"
 
   $.ajax({
@@ -161,4 +142,4 @@ const playlistQueryUrl = "https://api.napster.com/v2.2/genres/" + genreId + "/tr
     // }
     }
   });
-
+});
