@@ -128,6 +128,7 @@ const playlistQueryUrl = "https://api.napster.com/v2.2/genres/" + genreId + "/tr
     trackDetails = response.tracks;
     console.log("this is what napster returns", response);
     for (i=0; i<trackDetails.length; i++) {
+      let artistName =response.tracks[i].artistName;
     let songTitle = (response.tracks[i].name);
     $("#previewURL").append("Song Title: " + songTitle);
     let trackId = (response.tracks[i].id);
@@ -147,6 +148,17 @@ const playlistQueryUrl = "https://api.napster.com/v2.2/genres/" + genreId + "/tr
       trackId: trackId,
       previewURL: previewURL
     })
+    // created url variable to call song from returned array from database also making an ajax call. 
+    // const artist= "Coldplay"
+    // const title= "Adventure of a Lifetime"
+    // create a variable for artist based on napster response
+    const url = "https://api.lyrics.ovh/v1/"+ artistName +"/"+songTitle;
+    $.ajax({
+        url: url, 
+        method:"GET"
+    }).then(function(lyrics){
+        console.log(lyrics);
+    });
     }
   });
 });
