@@ -104,19 +104,30 @@ for (j=0; j<genres.length; j++) {
   let genreId = genres[j].id;
   console.log(genres[j].name);
   let genreName = genres[j].name;
+  if(genreName === "Classical"){
+    $("#classical-btn").attr("genreId", genreId);
+    } else if (genreName === "Pop"){
+      $("#pop-btn").attr("genreId", genreId);
+      } else if (genreName === "Rap/Hip-Hop") {
+      $("#hiphop-btn").attr("genreId", genreId);
+        } else if (genreName === "Rock") {
+      $("#rock-btn").attr("genreId", genreId);
+          } else if (genreName === "Electronic") {
+      $("#edm-btn").attr("genreId", genreId);
+            } else if (genreName === "Country") {
+    $("#country-btn").attr("genreId", genreId);
+    }
+
   //if I change the line below to .set, it only sets one genreName and genreId, but nothing else from the response array
   database.ref("genres").push({
     genreName: genreName,
     genreId: genreId
       });
-      // database.ref("/genres/genreName").set({
-      //   genreId: genreId
-      // })
     };   
   });
 
 $("#classical-btn").on ("click", function(event) {
-  // let genreName = database.ref("/genres/genreName");
+  // let currentgenre = database.ref("/genres/genreName");
   //     if(database.genres.genreName===""){
   //   Classical = database.ref("/genres/genreName/genreId");
   //   console.log(database.genres.genreName.genreId);
