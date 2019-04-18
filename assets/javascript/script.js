@@ -5,7 +5,7 @@ const hipHop = "Rap/Hip-Hop";
 const rock = "Rock";
 const edm = "Electronic";
 const country = "Country";
-let genreId = "";
+// let genreId = "";
 
 //initialize fireBase
   const config = {
@@ -114,17 +114,18 @@ for (j=0; j<genres.length; j++) {
   });
 
 $("#classical-btn").on ("click", function(event) {
-  let genreName = database.ref("/genres/genreName");
-      if(database.genres.genreName===""){
-    Classical = database.ref("/genres/genreName/genreId");
-    console.log(database.genres.genreName.genreId);
-    }
-  console.log(genreId);
+  // let genreName = database.ref("/genres/genreName");
+  //     if(database.genres.genreName===""){
+  //   Classical = database.ref("/genres/genreName/genreId");
+  //   console.log(database.genres.genreName.genreId);
+  //   }
+  // console.log(genreId);
 });
 
 
-//query napster for top playlist
-const playlistQueryUrl = "https://api.napster.com/v2.2/genres/g.397/tracks/top?apikey=ZmNiNDU0OGQtZDBhYS00OWI4LTg3ZWItZjc2MTkyY2EwNzgy"
+let genreId = "g.156";
+//query napster for top playlist based on genre
+const playlistQueryUrl = "https://api.napster.com/v2.2/genres/" + genreId + "/tracks/top?apikey=ZmNiNDU0OGQtZDBhYS00OWI4LTg3ZWItZjc2MTkyY2EwNzgy"
 
   $.ajax({
     url: playlistQueryUrl,
