@@ -104,12 +104,14 @@ for (j=0; j<genres.length; j++) {
   let genreId = genres[j].id;
   console.log(genres[j].name);
   let genreName = genres[j].name;
-  database.ref("genres").set({
+  //if I change the line below to .set, it only sets one genreName and genreId, but nothing else from the response array
+  database.ref("genres").push({
     genreName: genreName,
+    genreId: genreId
       });
-      database.ref("/genres/genreName").set({
-        genreId: genreId
-      })
+      // database.ref("/genres/genreName").set({
+      //   genreId: genreId
+      // })
     };   
   });
 
