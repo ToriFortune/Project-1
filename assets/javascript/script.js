@@ -140,6 +140,13 @@ const playlistQueryUrl = "https://api.napster.com/v2.2/genres/" + genreId + "/tr
     // for (j=0; j<genre.length; j++){
     // console.log("this is the genre id: " + genre[j]);
     // }
+
+    //currently only adding one song from the response results
+    database.ref("/tracks").set({
+      songTitle: songTitle,
+      trackId: trackId,
+      previewURL: previewURL
+    })
     }
   });
 });
