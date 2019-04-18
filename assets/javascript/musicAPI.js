@@ -28,3 +28,6 @@ function getSongs(songTitle){
     })
 }
 getSongs();
+// initial values
+// var songID
+// songName
