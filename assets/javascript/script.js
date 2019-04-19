@@ -190,7 +190,6 @@ database.ref("/tracks").on("child_added", function(snapshot) {
   audio.attr("src", previewURL);
   // audio.wrapInner("<source id='sourceid'>");
 
-  // $("#sourceid").attr("src", previewURL);
   console.log(audio);
 
   var newRow3 = $("<tr>");
