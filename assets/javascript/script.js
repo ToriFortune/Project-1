@@ -182,7 +182,6 @@ $("a").on("click", function (event) {
       let audio = $("<audio controls>");
       audio.attr("id", "sourceid" + i);
       audio.attr("src", previewURL);
-      audio.attr("width", "50");
       // audio.wrapInner("<source id='sourceid'>");
 
       // $("#sourceid").attr("src", previewURL);
