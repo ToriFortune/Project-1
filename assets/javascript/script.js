@@ -83,9 +83,13 @@ $(document).ready(function () {
    login();
   })
 
+  $("#reset-btn").click(() => {
+    reset();
+});
+
 function reset() {
   database.ref("/tracks").remove();
-  $("tr").empty();
+  $("td").empty();
 };
 
 
