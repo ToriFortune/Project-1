@@ -33,7 +33,7 @@ $(document).ready(function () {
 
   new WOW().init();
 
-  //napster user login
+  //napster user login, provided
   const width = 700;
   const height = 400;
   const left = (screen.width / 2) - (width / 2);
@@ -77,7 +77,7 @@ $(document).ready(function () {
       'Napster',
       `menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=${width},height=${height},top=${top}, left=${left}`
     );
-  }
+  };
   
   $loginButton.click(() => {
    login();
