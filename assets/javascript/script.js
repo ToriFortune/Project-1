@@ -100,16 +100,22 @@ $.ajax({
     let genreName = genres[j].name;
     if (genreName === "Classical") {
       $("#classical-btn").attr("genreId", genreId);
+      $("#classical-btn").attr("genreName", genreName)
     } else if (genreName === "Pop") {
       $("#pop-btn").attr("genreId", genreId);
+      $("#pop-btn").attr("genreName", genreName)
     } else if (genreName === "Rap/Hip-Hop") {
       $("#hiphop-btn").attr("genreId", genreId);
+      $("#hiphop-btn").attr("genreName", genreName)
     } else if (genreName === "Rock") {
       $("#rock-btn").attr("genreId", genreId);
+      $("#rock-btn").attr("genreName", genreName)
     } else if (genreName === "Electronic") {
       $("#edm-btn").attr("genreId", genreId);
+      $("#edm-btn").attr("genreName", genreName)
     } else if (genreName === "Country") {
       $("#country-btn").attr("genreId", genreId);
+      $("#country-btn").attr("genreName", genreName)
     };
   }
 });
@@ -117,26 +123,9 @@ $.ajax({
 //on genre 'a' click grab the genreId attribute and use it in the query URL
 $("a").on("click", function (event) {
   genreId = $(this).attr("genreId");
+  genreName = $(this).attr("genreName");
   console.log(genreId);
-
-  //query napster for genre list and push to firebase
-  // const genreQueryUrl = "https://api.napster.com/v2.2/genres?apikey=ZmNiNDU0OGQtZDBhYS00OWI4LTg3ZWItZjc2MTkyY2EwNzgy"
-
-  // $.ajax({
-  //   url: genreQueryUrl,
-  //   method: "GET"
-  // }).then(function (data) {
-  //   console.log("this is the response: " + data.genres[0].id);
-  //   let genres = (data.genres);
-  //   for (j = 0; j < genres.length; j++) {
-  //     console.log(genres[j].id);
-  //     console.log(genres[j].name);
-  //     var newRow1 = $("<tr>");
-  //     var newTableData1 = $("<td>").text(genres[j].name);
-  //     newRow1.append(newTableData1);
-  //     $("#genres").append(newRow1);
-  //   }
-  // })
+  console.log("this should be genrename", genreName)
 
   //query napster for top tracks based on genre
   const playlistQueryUrl = "https://api.napster.com/v2.2/genres/" + genreId + "/tracks/top?apikey=ZmNiNDU0OGQtZDBhYS00OWI4LTg3ZWItZjc2MTkyY2EwNzgy"
@@ -147,23 +136,23 @@ $("a").on("click", function (event) {
   }).then(function (response) {
     trackDetails = response.tracks;
     console.log("this is what napster returns", response);
+    console.log(genreId);
     for (i = 0; i < trackDetails.length; i++) {
       let songTitle = (response.tracks[i].name);
-      let artistTitle = (response.tracks[i].artistName);
+      let artistName = (response.tracks[i].artistName);
       console.log(response.tracks[i].artistName);
       let trackId = (response.tracks[i].id);
       console.log(response.tracks[i].id);
       let previewURL = (response.tracks[i].previewURL);
       console.log(previewURL);
-      // $("#previewURL").append(previewURL);
-      console.log("mp3 link", response.tracks[i].previewURL);
-
-      database.ref("/tracks").set({
+      console.log("this is genreName", genreName);
+      database.ref("/tracks").push({
         songTitle: songTitle,
+        artistTitle: artistName,
         trackId: trackId,
-        previewURL: previewURL
+        previewURL: previewURL,
+        genreName: genreName
       })
-
 
       var newRow = $("<tr>");
       var newTableData = $("<td>").text(songTitle);
@@ -171,13 +160,9 @@ $("a").on("click", function (event) {
       $("#songs").append(newRow);
 
       var newRow2 = $("<tr>");
-      var newTableData2 = $("<td>").text(artistTitle);
+      var newTableData2 = $("<td>").text(artistName);
       newRow2.append(newTableData2);
       $("#artist").append(newRow2);
-
-
-      // let iframe = $("<iframe class = 'embed responsive embled-responsive-1by1 embed-responsive-item' id='iframe-id'>")
-      // iframe.attr('src', previewURL);
 
       let audio = $("<audio controls>");
       audio.attr("id", "sourceid" + i);
@@ -192,16 +177,21 @@ $("a").on("click", function (event) {
       var newTableData3 = $("<td>").wrapInner(audio);
       newRow3.append(newTableData3);
       $("#previewURL").append(newRow3);
-
-
+      
     }
-
-
-
-
-
 
   });
 
+});
 
+database.ref("/tracks").on("child_added", function(snapshot) {
+  console.log("this is snapshot: ", snapshot.val().songTitle);
+  let songTitle = snapshot.val().songTitle;
+  let artistName = snapshot.val().artistName;
+  let trackId = snapshot.val().trackId;
+  let previewURL = snapshot.val().previewURL;
+  let genreName = snapshot.val().genreName;
+  //the next two lines of code need to be replaced with Ibrahim's code
+  $("#previewURL").append(songTitle);
+  $("#previewURL").append(artistTitle);
 });
