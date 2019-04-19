@@ -119,25 +119,6 @@ $("a").on("click", function (event) {
   genreId = $(this).attr("genreId");
   console.log(genreId);
 
-  //query napster for genre list and push to firebase
-  // const genreQueryUrl = "https://api.napster.com/v2.2/genres?apikey=ZmNiNDU0OGQtZDBhYS00OWI4LTg3ZWItZjc2MTkyY2EwNzgy"
-
-  // $.ajax({
-  //   url: genreQueryUrl,
-  //   method: "GET"
-  // }).then(function (data) {
-  //   console.log("this is the response: " + data.genres[0].id);
-  //   let genres = (data.genres);
-  //   for (j = 0; j < genres.length; j++) {
-  //     console.log(genres[j].id);
-  //     console.log(genres[j].name);
-  //     var newRow1 = $("<tr>");
-  //     var newTableData1 = $("<td>").text(genres[j].name);
-  //     newRow1.append(newTableData1);
-  //     $("#genres").append(newRow1);
-  //   }
-  // })
-
   //query napster for top tracks based on genre
   const playlistQueryUrl = "https://api.napster.com/v2.2/genres/" + genreId + "/tracks/top?apikey=ZmNiNDU0OGQtZDBhYS00OWI4LTg3ZWItZjc2MTkyY2EwNzgy"
 
@@ -155,15 +136,13 @@ $("a").on("click", function (event) {
       console.log(response.tracks[i].id);
       let previewURL = (response.tracks[i].previewURL);
       console.log(previewURL);
-      // $("#previewURL").append(previewURL);
       console.log("mp3 link", response.tracks[i].previewURL);
-
-      database.ref("/tracks").set({
+      database.ref("/tracks").push({
         songTitle: songTitle,
+        artistTitle: artistTitle,
         trackId: trackId,
         previewURL: previewURL
       })
-
 
       var newRow = $("<tr>");
       var newTableData = $("<td>").text(songTitle);
@@ -175,7 +154,6 @@ $("a").on("click", function (event) {
       newRow2.append(newTableData2);
       $("#artist").append(newRow2);
 
-
       let iframe = $("<iframe class = 'embed responsive embled-responsive-1by1 embed-responsive-item' id='iframe-id'>")
       iframe.attr('src', previewURL);
 
@@ -184,18 +162,8 @@ $("a").on("click", function (event) {
       var newTableData3 = $("<td>").wrapInner(iframe);
       newRow3.append(newTableData3);
       $("#previewURL").append(newRow3);
-
-
-
-
     }
 
-
-
-
-
-
   });
-
 
 });
