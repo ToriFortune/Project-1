@@ -58,58 +58,66 @@ $(document).ready(function () {
     });
   }
 
-  function login() {
-    window.addEventListener('message', (event) => {
-      var hash = JSON.parse(event.data);
-      if (hash.type === 'access_token') {
-        fetchUserData(hash.access_token)
-          .then((data) => {
-            $loginSection.hide();
-            $result.html(resultsTemplate(data.me));
-            $result.show();
-          });
-      }
-    }, false);
+  // function login() {
+  //   window.addEventListener('message', (event) => {
+  //     var hash = JSON.parse(event.data);
+  //     if (hash.type === 'access_token') {
+  //       fetchUserData(hash.access_token)
+  //         .then((data) => {
+  //           $loginSection.hide();
+  //           $result.html(resultsTemplate(data.me));
+  //           $result.show();
+  //         });
+  //     }
+  //   }, false);
 
-    window.open(
-      `${oauthURL}&redirect_uri=${REDIRECT_URI}`,
-      'Napster',
-      `menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=${width},height=${height}, left=${left}`
-    );
-  }
+    // window.open(
+    //   `${oauthURL}&redirect_uri=${REDIRECT_URI}`,
+    //   'Napster',
+    //   `menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=${width},height=${height}, left=${left}`
+    // );
+  });
 
-  $loginButton.click(() => {
-    login();
-    console.log("login button was clicked");
-  })
+  // $loginButton.click(() => {
+  //   login();
+  //   console.log("login button was clicked");
+  // })
 
   //query napster for genre list and push to firebase
-  const genreQueryUrl = "https://api.napster.com/v2.2/genres?apikey=ZmNiNDU0OGQtZDBhYS00OWI4LTg3ZWItZjc2MTkyY2EwNzgy"
+ //query napster for genre list and push to firebase
+const genreQueryUrl = "https://api.napster.com/v2.2/genres?apikey=ZmNiNDU0OGQtZDBhYS00OWI4LTg3ZWItZjc2MTkyY2EwNzgy"
 
-  const genreId = "";
-  const genreName = "";
-  $.ajax({
-    url: genreQueryUrl,
-    method: "GET"
-  }).then(function (data) {
-    console.log("this is the response: " + data.genres[0].id);
-    let genres = (data.genres);
-    for (j = 0; j < genres.length; j++) {
-      console.log(genres[j].id);
-      let genreId = genres[j].id;
-      console.log(genres[j].name);
-      let genreName = genres[j].name;
-      var newRow1 = $("<tr>");
-      var newTableData1 = $("<td>").text(genres[j].name);
-      newRow1.append(newTableData1);
-      $("#genres").append(newRow1);
+$.ajax({
+  url: genreQueryUrl,
+  method: "GET"
+}).then(function (data) {
+  console.log("this is the response: " + data.genres[0].id);
+  let genres = (data.genres);
+  for (j = 0; j < genres.length; j++) {
+    console.log(genres[j].id);
+    let genreId = genres[j].id;
+    console.log(genres[j].name);
+    let genreName = genres[j].name;
+    if (genreName === "Classical") {
+      $("#classical-btn").attr("genreId", genreId);
+    } else if (genreName === "Pop") {
+      $("#pop-btn").attr("genreId", genreId);
+    } else if (genreName === "Rap/Hip-Hop") {
+      $("#hiphop-btn").attr("genreId", genreId);
+    } else if (genreName === "Rock") {
+      $("#rock-btn").attr("genreId", genreId);
+    } else if (genreName === "Electronic") {
+      $("#edm-btn").attr("genreId", genreId);
+    } else if (genreName === "Country") {
+      $("#country-btn").attr("genreId", genreId);
+    };
+  }
+});
 
-      database.ref("/genres").push({
-        genreId: genreId,
-        genreName: genreName
-      })
-    }
-  })
+//on genre 'a' click grab the genreId attribute and use it in the query URL
+$("a").on("click", function (event) {
+  genreId = $(this).attr("genreId");
+  console.log(genreId);
 
   //query napster for genre list and push to firebase
   // const genreQueryUrl = "https://api.napster.com/v2.2/genres?apikey=ZmNiNDU0OGQtZDBhYS00OWI4LTg3ZWItZjc2MTkyY2EwNzgy"
@@ -130,9 +138,8 @@ $(document).ready(function () {
   //   }
   // })
 
-  //query napster for top playlist
-  console.log("this is code line 82");
-  const playlistQueryUrl = "https://api.napster.com/v2.2/genres/g.397/tracks/top?apikey=ZmNiNDU0OGQtZDBhYS00OWI4LTg3ZWItZjc2MTkyY2EwNzgy"
+  //query napster for top tracks based on genre
+  const playlistQueryUrl = "https://api.napster.com/v2.2/genres/" + genreId + "/tracks/top?apikey=ZmNiNDU0OGQtZDBhYS00OWI4LTg3ZWItZjc2MTkyY2EwNzgy"
 
   $.ajax({
     url: playlistQueryUrl,
@@ -142,20 +149,20 @@ $(document).ready(function () {
     console.log("this is what napster returns", response);
     for (i = 0; i < trackDetails.length; i++) {
       let songTitle = (response.tracks[i].name);
-      // $("#songs").append("Song Title: " + songTitle);
       let artistTitle = (response.tracks[i].artistName);
       console.log(response.tracks[i].artistName);
-      // $("#previewURL").append("this is the artist name: " + artistTitle);
       let trackId = (response.tracks[i].id);
       console.log(response.tracks[i].id);
-      // $("#previewURL").append("this is the trackId: " + trackId);
       let previewURL = (response.tracks[i].previewURL);
       console.log(previewURL);
-
-
-
       // $("#previewURL").append(previewURL);
       console.log("mp3 link", response.tracks[i].previewURL);
+
+      database.ref("/tracks").set({
+        songTitle: songTitle,
+        trackId: trackId,
+        previewURL: previewURL
+      })
 
 
       var newRow = $("<tr>");
@@ -182,6 +189,8 @@ $(document).ready(function () {
 
 
     }
+
+
 
 
 
