@@ -176,16 +176,22 @@ $("a").on("click", function (event) {
       $("#artist").append(newRow2);
 
 
-      let iframe = $("<iframe class = 'embed responsive embled-responsive-1by1 embed-responsive-item' id='iframe-id'>")
-      iframe.attr('src', previewURL);
+      // let iframe = $("<iframe class = 'embed responsive embled-responsive-1by1 embed-responsive-item' id='iframe-id'>")
+      // iframe.attr('src', previewURL);
+
+      let audio = $("<audio controls>");
+      audio.attr("id", "sourceid" + i);
+      audio.attr("src", previewURL);
+      audio.attr("width", "50");
+      // audio.wrapInner("<source id='sourceid'>");
+
+      // $("#sourceid").attr("src", previewURL);
+      console.log(audio);
 
       var newRow3 = $("<tr>");
-      // var newTableData3 = $("<td>").append(previewURL);
-      var newTableData3 = $("<td>").wrapInner(iframe);
+      var newTableData3 = $("<td>").wrapInner(audio);
       newRow3.append(newTableData3);
       $("#previewURL").append(newRow3);
-
-
 
 
     }
