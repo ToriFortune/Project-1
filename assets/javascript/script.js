@@ -139,7 +139,7 @@ $("a").on("click", function (event) {
     console.log(genreId);
     for (i = 0; i < trackDetails.length; i++) {
       let songTitle = (response.tracks[i].name);
-      let artistTitle = (response.tracks[i].artistName);
+      let artistName = (response.tracks[i].artistName);
       console.log(response.tracks[i].artistName);
       let trackId = (response.tracks[i].id);
       console.log(response.tracks[i].id);
@@ -148,30 +148,30 @@ $("a").on("click", function (event) {
       console.log("this is genreName", genreName);
       database.ref("/tracks").push({
         songTitle: songTitle,
-        artistTitle: artistTitle,
+        artistTitle: artistName,
         trackId: trackId,
         previewURL: previewURL,
         genreName: genreName
       })
 
-      // var newRow = $("<tr>");
-      // var newTableData = $("<td>").text(songTitle);
-      // newRow.append(newTableData);
-      // $("#songs").append(newRow);
+      var newRow = $("<tr>");
+      var newTableData = $("<td>").text(songTitle);
+      newRow.append(newTableData);
+      $("#songs").append(newRow);
 
-      // var newRow2 = $("<tr>");
-      // var newTableData2 = $("<td>").text(artistTitle);
-      // newRow2.append(newTableData2);
-      // $("#artist").append(newRow2);
+      var newRow2 = $("<tr>");
+      var newTableData2 = $("<td>").text(artistName);
+      newRow2.append(newTableData2);
+      $("#artist").append(newRow2);
 
-      // let iframe = $("<iframe class = 'embed responsive embled-responsive-1by1 embed-responsive-item' id='iframe-id'>")
-      // iframe.attr('src', previewURL);
+      let iframe = $("<iframe class = 'embed responsive embled-responsive-1by1 embed-responsive-item' id='iframe-id'>")
+      iframe.attr('src', previewURL);
 
-      // var newRow3 = $("<tr>");
-      // // var newTableData3 = $("<td>").append(previewURL);
-      // var newTableData3 = $("<td>").wrapInner(iframe);
-      // newRow3.append(newTableData3);
-      // $("#previewURL").append(newRow3);
+      var newRow3 = $("<tr>");
+      // var newTableData3 = $("<td>").append(previewURL);
+      var newTableData3 = $("<td>").wrapInner(iframe);
+      newRow3.append(newTableData3);
+      $("#previewURL").append(newRow3);
     }
 
   });
@@ -181,7 +181,10 @@ $("a").on("click", function (event) {
 database.ref("/tracks").on("child_added", function(snapshot) {
   console.log("this is snapshot: ", snapshot.val().songTitle);
   let songTitle = snapshot.val().songTitle;
-  let artistTitle = snapshot.val().artistTitle;
+  let artistName = snapshot.val().artistName;
+  let trackId = snapshot.val().trackId;
+  let previewURL = snapshot.val().previewURL;
+  let genreName = snapshot.val().genreName;
   //the next two lines of code need to be replaced with Ibrahim's code
   $("#previewURL").append(songTitle);
   $("#previewURL").append(artistTitle);
