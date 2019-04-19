@@ -120,12 +120,14 @@ $.ajax({
   }
 });
 
+let userNum = 0;
 //on genre 'a' click grab the genreId attribute and use it in the query URL
 $("a").on("click", function (event) {
   genreId = $(this).attr("genreId");
   genreName = $(this).attr("genreName");
   console.log(genreId);
-  console.log("this should be genrename", genreName)
+  console.log("this should be genrename", genreName);
+  userNum++;
 
   //query napster for top tracks based on genre
   const playlistQueryUrl = "https://api.napster.com/v2.2/genres/" + genreId + "/tracks/top?apikey=ZmNiNDU0OGQtZDBhYS00OWI4LTg3ZWItZjc2MTkyY2EwNzgy"
@@ -151,7 +153,8 @@ $("a").on("click", function (event) {
         artistTitle: artistName,
         trackId: trackId,
         previewURL: previewURL,
-        genreName: genreName
+        genreName: genreName,
+        userNum: userNum
       });
     };
   });
