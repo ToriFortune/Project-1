@@ -154,30 +154,8 @@ $("a").on("click", function (event) {
         genreName: genreName
       })
 
-      var newRow = $("<tr>");
-      var newTableData = $("<td>").text(songTitle);
-      newRow.append(newTableData);
-      $("#songs").append(newRow);
 
-      var newRow2 = $("<tr>");
-      var newTableData2 = $("<td>").text(artistName);
-      newRow2.append(newTableData2);
-      $("#artist").append(newRow2);
-
-      let audio = $("<audio controls>");
-      audio.attr("id", "sourceid" + i);
-      audio.attr("src", previewURL);
-      // audio.wrapInner("<source id='sourceid'>");
-
-      // $("#sourceid").attr("src", previewURL);
-      console.log(audio);
-
-
-      var newRow3 = $("<tr>");
-      var newTableData3 = $("<td>").wrapInner(audio);
-      newRow3.append(newTableData3);
-      $("#previewURL").append(newRow3);
-
+      
     }
 
   });
@@ -192,6 +170,30 @@ database.ref("/tracks").on("child_added", function(snapshot) {
   let previewURL = snapshot.val().previewURL;
   let genreName = snapshot.val().genreName;
   //the next two lines of code need to be replaced with Ibrahim's code
-  $("#previewURL").append(songTitle);
-  $("#previewURL").append(artistTitle);
+  var newRow = $("<tr>");
+  var newTableData = $("<td>").text(songTitle);
+  newRow.append(newTableData);
+  $("#songs").append(newRow);
+
+  var newRow2 = $("<tr>");
+  var newTableData2 = $("<td>").text(artistName);
+  newRow2.append(newTableData2);
+  $("#artist").append(newRow2);
+
+  var newRow4 = $("<tr>");
+  var newTableData4 = $("<td>").text(genreName);
+  newRow4.append(newTableData4);
+  $("#genres").append(newRow4);
+
+  let audio = $("<audio controls>");
+  audio.attr("id", "sourceid" + i);
+  audio.attr("src", previewURL);
+  // audio.wrapInner("<source id='sourceid'>");
+
+  console.log(audio);
+
+  var newRow3 = $("<tr>");
+  var newTableData3 = $("<td>").wrapInner(audio);
+  newRow3.append(newTableData3);
+  $("#previewURL").append(newRow3);
 });
