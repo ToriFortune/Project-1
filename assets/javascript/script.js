@@ -167,17 +167,17 @@ $("a").on("click", function (event) {
       let audio = $("<audio controls>");
       audio.attr("id", "sourceid" + i);
       audio.attr("src", previewURL);
-      audio.attr("width", "50");
       // audio.wrapInner("<source id='sourceid'>");
 
       // $("#sourceid").attr("src", previewURL);
       console.log(audio);
 
+
       var newRow3 = $("<tr>");
       var newTableData3 = $("<td>").wrapInner(audio);
       newRow3.append(newTableData3);
       $("#previewURL").append(newRow3);
-      
+
     }
 
   });
