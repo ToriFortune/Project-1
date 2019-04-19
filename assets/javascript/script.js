@@ -100,16 +100,22 @@ $.ajax({
     let genreName = genres[j].name;
     if (genreName === "Classical") {
       $("#classical-btn").attr("genreId", genreId);
+      $("#classical-btn").attr("genreName", genreName)
     } else if (genreName === "Pop") {
       $("#pop-btn").attr("genreId", genreId);
+      $("#pop-btn").attr("genreName", genreName)
     } else if (genreName === "Rap/Hip-Hop") {
       $("#hiphop-btn").attr("genreId", genreId);
+      $("#hiphop-btn").attr("genreName", genreName)
     } else if (genreName === "Rock") {
       $("#rock-btn").attr("genreId", genreId);
+      $("#rock-btn").attr("genreName", genreName)
     } else if (genreName === "Electronic") {
       $("#edm-btn").attr("genreId", genreId);
+      $("#edm-btn").attr("genreName", genreName)
     } else if (genreName === "Country") {
       $("#country-btn").attr("genreId", genreId);
+      $("#country-btn").attr("genreName", genreName)
     };
   }
 });
@@ -117,7 +123,9 @@ $.ajax({
 //on genre 'a' click grab the genreId attribute and use it in the query URL
 $("a").on("click", function (event) {
   genreId = $(this).attr("genreId");
+  genreName = $(this).attr("genreName");
   console.log(genreId);
+  console.log("this should be genrename", genreName)
 
   //query napster for top tracks based on genre
   const playlistQueryUrl = "https://api.napster.com/v2.2/genres/" + genreId + "/tracks/top?apikey=ZmNiNDU0OGQtZDBhYS00OWI4LTg3ZWItZjc2MTkyY2EwNzgy"
@@ -128,6 +136,7 @@ $("a").on("click", function (event) {
   }).then(function (response) {
     trackDetails = response.tracks;
     console.log("this is what napster returns", response);
+    console.log(genreId);
     for (i = 0; i < trackDetails.length; i++) {
       let songTitle = (response.tracks[i].name);
       let artistTitle = (response.tracks[i].artistName);
@@ -136,12 +145,13 @@ $("a").on("click", function (event) {
       console.log(response.tracks[i].id);
       let previewURL = (response.tracks[i].previewURL);
       console.log(previewURL);
-      console.log("mp3 link", response.tracks[i].previewURL);
+      let genreId = (response.tracks[i].links.genres.ids[0]);
+      console.log("this is genreID", genreId);
       database.ref("/tracks").push({
         songTitle: songTitle,
         artistTitle: artistTitle,
         trackId: trackId,
-        previewURL: previewURL
+        previewURL: previewURL,
       })
 
       // var newRow = $("<tr>");
@@ -170,4 +180,9 @@ $("a").on("click", function (event) {
 
 database.ref("/tracks").on("child_added", function(snapshot) {
   console.log("this is snapshot: ", snapshot.val().songTitle);
+  let songTitle = snapshot.val().songTitle;
+  let artistTitle = snapshot.val().artistTitle;
+  //the next two lines of code need to be replaced with Ibrahim's code
+  $("#previewURL").append(songTitle);
+  $("#previewURL").append(artistTitle);
 });
