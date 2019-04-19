@@ -33,7 +33,7 @@ $(document).ready(function () {
 
   new WOW().init();
 
-  //napster user login, provided
+  //napster user login, provided by napster API examples (https://developer.napster.com/examples)
   const width = 700;
   const height = 400;
   const left = (screen.width / 2) - (width / 2);
@@ -83,7 +83,12 @@ $(document).ready(function () {
    login();
   })
 
-  //query napster for genre list and push to firebase
+function reset() {
+  database.ref("/tracks").remove();
+  $("tr").empty();
+};
+
+
  //query napster for genre list and push to firebase
 const genreQueryUrl = "https://api.napster.com/v2.2/genres?apikey=ZmNiNDU0OGQtZDBhYS00OWI4LTg3ZWItZjc2MTkyY2EwNzgy"
 
@@ -120,16 +125,13 @@ $.ajax({
   }
 });
 
-let userNum = 0;
+
 //on genre 'a' click grab the genreId attribute and use it in the query URL
 $("a").on("click", function (event) {
-  database.ref("/tracks").remove();
-  
   genreId = $(this).attr("genreId");
   genreName = $(this).attr("genreName");
   console.log(genreId);
   console.log("this should be genrename", genreName);
-  userNum++;
 
   //query napster for top tracks based on genre
   const playlistQueryUrl = "https://api.napster.com/v2.2/genres/" + genreId + "/tracks/top?apikey=ZmNiNDU0OGQtZDBhYS00OWI4LTg3ZWItZjc2MTkyY2EwNzgy"
@@ -156,7 +158,6 @@ $("a").on("click", function (event) {
         trackId: trackId,
         previewURL: previewURL,
         genreName: genreName,
-        userNum: userNum
       });
     };
   });
