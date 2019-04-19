@@ -149,7 +149,7 @@ $("a").on("click", function (event) {
     console.log("this is what napster returns", response);
     for (i = 0; i < trackDetails.length; i++) {
       let songTitle = (response.tracks[i].name);
-      let artistTitle = (response.tracks[i].artistName);
+      let artistName = (response.tracks[i].artistName);
       
       console.log(response.tracks[i].artistName);
       let trackId = (response.tracks[i].id);
@@ -182,7 +182,7 @@ $("a").on("click", function (event) {
       $("#songs").append(newRow);
 
       var newRow2 = $("<tr>");
-      var newTableData2 = $("<td>").text(artistTitle);
+      var newTableData2 = $("<td>").text(artistName);
       newRow2.append(newTableData2);
       $("#artist").append(newRow2);
 
