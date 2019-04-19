@@ -3,6 +3,10 @@
     color: white;
 }
 
+#genrecontainer {
+    margin-left: 18%;
+}
+
 .card-title {
     text-align: center;
 }
@@ -51,5 +55,9 @@
 
 .jumbotron {
     font-family: 'Quattrocento Sans', sans-serif;
+}
+
+#reset-section {
+    text-align: center;
 }
 
