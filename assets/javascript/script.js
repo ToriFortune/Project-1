@@ -145,13 +145,13 @@ $("a").on("click", function (event) {
       console.log(response.tracks[i].id);
       let previewURL = (response.tracks[i].previewURL);
       console.log(previewURL);
-      let genreId = (response.tracks[i].links.genres.ids[0]);
-      console.log("this is genreID", genreId);
+      console.log("this is genreName", genreName);
       database.ref("/tracks").push({
         songTitle: songTitle,
         artistTitle: artistTitle,
         trackId: trackId,
         previewURL: previewURL,
+        genreName: genreName
       })
 
       // var newRow = $("<tr>");
