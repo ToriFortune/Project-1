@@ -123,6 +123,8 @@ $.ajax({
 let userNum = 0;
 //on genre 'a' click grab the genreId attribute and use it in the query URL
 $("a").on("click", function (event) {
+  database.ref("/tracks").remove();
+  
   genreId = $(this).attr("genreId");
   genreName = $(this).attr("genreName");
   console.log(genreId);
@@ -167,6 +169,7 @@ database.ref("/tracks").on("child_added", function(snapshot) {
   let trackId = snapshot.val().trackId;
   let previewURL = snapshot.val().previewURL;
   let genreName = snapshot.val().genreName;
+
   //the next two lines of code need to be replaced with Ibrahim's code
   var newRow = $("<tr>");
   var newTableData = $("<td>").text(songTitle);
