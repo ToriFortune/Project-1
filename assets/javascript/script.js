@@ -58,30 +58,30 @@ $(document).ready(function () {
     });
   }
 
-  // function login() {
-  //   window.addEventListener('message', (event) => {
-  //     var hash = JSON.parse(event.data);
-  //     if (hash.type === 'access_token') {
-  //       fetchUserData(hash.access_token)
-  //         .then((data) => {
-  //           $loginSection.hide();
-  //           $result.html(resultsTemplate(data.me));
-  //           $result.show();
-  //         });
-  //     }
-  //   }, false);
+   function login() {
+     window.addEventListener('message', (event) => {
+       var hash = JSON.parse(event.data);
+       if (hash.type === 'access_token') {
+         fetchUserData(hash.access_token)
+           .then((data) => {
+             $loginSection.hide();
+             $result.html(resultsTemplate(data.me));
+             $result.show();
+           });
+       }
+     }, false);
 
-    // window.open(
-    //   `${oauthURL}&redirect_uri=${REDIRECT_URI}`,
-    //   'Napster',
-    //   `menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=${width},height=${height}, left=${left}`
-    // );
-  });
+   window.open(
+       `${oauthURL}&redirect_uri=${REDIRECT_URI}`,
+       'Napster',
+       `menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=${width},height=${height}, left=${left}`
+     );
+  };
 
-  // $loginButton.click(() => {
-  //   login();
-  //   console.log("login button was clicked");
-  // })
+   $loginButton.click(() => {
+     login();
+     console.log("login button was clicked");
+    })
 
   //query napster for genre list and push to firebase
  //query napster for genre list and push to firebase
