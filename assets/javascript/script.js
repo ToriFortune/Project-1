@@ -25,6 +25,7 @@ connected.on("value", function (snapshot) {
 
 $(document).ready(function () {
 
+
   //see how many connections there are to the app
   connections.on("value", function (snapshot) {
     $("#connections").text(snapshot.numChildren());
@@ -36,52 +37,51 @@ $(document).ready(function () {
   const width = 700;
   const height = 400;
   const left = (screen.width / 2) - (width / 2);
-  // const top = (screen.height / 2) - (height / 2);
+  const top = (screen.height / 2) - (height / 2);
   const $loginButton = $('#btn-login');
   const $loginSection = $('#login-section');
   const $result = $('#result');
   const templateSource = document.getElementById('result-template').innerHTML
   const resultsTemplate = Handlebars.compile(templateSource);
-
+  
   const napsterAPI = 'https://api.napster.com';
   const APIKEY = 'ZmNiNDU0OGQtZDBhYS00OWI4LTg3ZWItZjc2MTkyY2EwNzgy';
   const oauthURL = `${napsterAPI}/oauth/authorize?client_id=${APIKEY}&response_type=code`;
-
+  
   const REDIRECT_URI = 'https://iaiqbal.github.io/Project-1/';
-
-  function fetchUserData(accessToken) {
+  
+  function fetchUserData (accessToken) {
     return $.ajax({
       url: `${napsterAPI}/v2.1/me`,
       headers: {
         'Authorization': 'Bearer ' + accessToken
       }
-    });
+    });	
   }
-
-   function login() {
-     window.addEventListener('message', (event) => {
-       var hash = JSON.parse(event.data);
-       if (hash.type === 'access_token') {
-         fetchUserData(hash.access_token)
-           .then((data) => {
-             $loginSection.hide();
-             $result.html(resultsTemplate(data.me));
-             $result.show();
-           });
-       }
-     }, false);
-
-   window.open(
-       `${oauthURL}&redirect_uri=${REDIRECT_URI}`,
-       'Napster',
-       `menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=${width},height=${height}, left=${left}`
-     );
-  };
-
-   $loginButton.click(() => {
-     login();
-     console.log("login button was clicked");
-    })
+  
+  function login() {
+    window.addEventListener('message',(event) => {
+      var hash = JSON.parse(event.data);
+      if (hash.type === 'access_token') {
+        fetchUserData(hash.access_token)
+          .then((data) => {
+            $loginSection.hide();
+            $result.html(resultsTemplate(data.me));
+            $result.show();
+          });
+      }
+    }, false);
+   
+    window.open(
+      `${oauthURL}&redirect_uri=${REDIRECT_URI}`,
+      'Napster',
+      `menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=${width},height=${height},top=${top}, left=${left}`
+    );
+  }
+  
+  $loginButton.click(() => {
+   login();
+  })
 
   //query napster for genre list and push to firebase
  //query napster for genre list and push to firebase
@@ -152,14 +152,9 @@ $("a").on("click", function (event) {
         trackId: trackId,
         previewURL: previewURL,
         genreName: genreName
-      })
-
-
-      
-    }
-
+      });
+    };
   });
-
 });
 
 database.ref("/tracks").on("child_added", function(snapshot) {
@@ -196,4 +191,6 @@ database.ref("/tracks").on("child_added", function(snapshot) {
   var newTableData3 = $("<td>").wrapInner(audio);
   newRow3.append(newTableData3);
   $("#previewURL").append(newRow3);
+});
+//the line below ends the on document ready function
 });
