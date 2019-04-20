@@ -158,6 +158,13 @@ $("a").on("click", function (event) {
       let previewURL = (response.tracks[i].previewURL);
       console.log(previewURL);
       console.log("this is genreName", genreName);
+      database.ref("/tracks").push({
+        songTitle: songTitle,
+        artistName: artistName,
+        trackId: trackId,
+        previewURL: previewURL,
+        genreName: genreName,
+      });
       
       const url = "https://api.lyrics.ovh/v1/" +artistName +"/" +songTitle; 
 
@@ -172,14 +179,13 @@ $("a").on("click", function (event) {
           console.log(lyrics2);
             //  $("#lyricHeader").text(songTitle)
             //  $("#lyricZone").text(lyrics);
-         });
-      database.ref("/tracks").push({
-        songTitle: songTitle,
-        artistName: artistName,
-        trackId: trackId,
-        previewURL: previewURL,
-        genreName: genreName,
-      });
+            database.ref("/lyrics").push({
+              artistName: artistName,
+              songTitle: songTitle,
+              lyrics: lyrics2
+            });
+          });
+      
     };
   });
 });
