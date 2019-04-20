@@ -158,6 +158,21 @@ $("a").on("click", function (event) {
       let previewURL = (response.tracks[i].previewURL);
       console.log(previewURL);
       console.log("this is genreName", genreName);
+      
+      const url = "https://api.lyrics.ovh/v1/" +artistName +"/" +songTitle; 
+
+//     let lyrics = (response.lyrics);
+
+         $.ajax({
+             url: url, 
+             method:"GET"
+         }).then(function(lyrics){
+           console.log(lyrics);
+          let lyrics2 = lyrics.lyrics;
+          console.log(lyrics2);
+            //  $("#lyricHeader").text(songTitle)
+            //  $("#lyricZone").text(lyrics);
+         });
       database.ref("/tracks").push({
         songTitle: songTitle,
         artistName: artistName,
@@ -169,6 +184,8 @@ $("a").on("click", function (event) {
   });
 });
 
+// let artistName = "";
+// let songTitle="";
 database.ref("/tracks").on("child_added", function(snapshot) {
   console.log("this is snapshot: ", snapshot.val().songTitle);
   let songTitle = snapshot.val().songTitle;
@@ -176,6 +193,12 @@ database.ref("/tracks").on("child_added", function(snapshot) {
   let trackId = snapshot.val().trackId;
   let previewURL = snapshot.val().previewURL;
   let genreName = snapshot.val().genreName;
+  
+  // const url = "https://api.lyrics.ovh/v1/" + artistName + "/" + songTitle;
+  // var encodedUrl = encodeURI(url)
+  // console.log(url);
+  // console.log(encodedUrl);
+  // getLyrics();
 
   //the next two lines of code need to be replaced with Ibrahim's code
   var newRow = $("<tr>");
@@ -205,51 +228,25 @@ database.ref("/tracks").on("child_added", function(snapshot) {
   newRow3.append(newTableData3);
   $("#previewURL").append(newRow3);
 });
-//the line below ends the on document ready function
-});
+
 
 //get lyrics
 // created function to get song by title making an ajax call to the indicated database
-function getSongs(songTitle){
-    // created url variable to call song from returned array from database also making an ajax call. 
-   
-    const url = "https://api.lyrics.ovh/v1/" +artistName +"/" +songTitle;
-    $.ajax({
-      url:url,
-      method: "GET"
-    }).then (function(response){
-    console.log(response);
-    
-    })
-        //Used filter method to compare selected song title queried from the URL with returned value in the response
-         const thisSong = response.filter(function(song){return song.title === songTitle})[0];
-// // ajax call to get lyrics, embed song title in html using element id, embed song in html using element id.
-//          $.ajax({
-//              url: `${url}/${thisSong.id}/lyrics`, 
-//              method:"GET"
-//          }).then(function(lyrics){
-//              $("#lyricHeader").text(songTitle)
-//              $("#lyricZone").text(lyrics);
-//          });
-//      });
-//  };
-    const artist= "Coldplay"
-    const title= "Adventure of a Lifetime"
-    const url = "https://api.lyrics.ovh/v1/Coldplay/Adventure of a Lifetime";
-    $.ajax({
-         url: url, 
-         method:"GET"
-     }).then(function(response){
-         console.log(response);
-        //Used filter method to compare selected song title queried from the URL with returned value in the response
-         const thisSong = response.filter(function(song){return song.title === songTitle})[0];
-// ajax call to get lyrics, embed song title in html using element id, embed song in html using element id.
-         $.ajax({
-             url: `${url}/${thisSong.id}/lyrics`, 
-             method:"GET"
-         }).then(function(lyrics){
-             $("#lyricHeader").text(songTitle)
-             $("#lyricZone").text(lyrics);
-         });
-     });
- };
+// function getLyrics(songTitle){
+//     // created url variable to call song from returned array from database also making an ajax call. 
+    // const url = "https://api.lyrics.ovh/v1/" +artistName +"/" +songTitle; 
+
+//     let lyrics = (response.lyrics);
+
+    //      $.ajax({
+    //          url: url, 
+    //          method:"GET"
+    //      }).then(function(lyrics){
+    //        console.log(lyrics);
+    //          $("#lyricHeader").text(songTitle)
+    //          $("#lyricZone").text(lyrics);
+    //      });
+    //  };
+
+//the line below ends the on document ready function
+});
