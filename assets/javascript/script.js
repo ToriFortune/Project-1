@@ -134,6 +134,8 @@ $.ajax({
 $("a").on("click", function (event) {
   genreId = $(this).attr("genreId");
   genreName = $(this).attr("genreName");
+  // added bounce animation to genre buttons
+  $(this).addClass('animated bounce')
   console.log(genreId);
   console.log("this should be genrename", genreName);
 
@@ -164,10 +166,40 @@ $("a").on("click", function (event) {
         previewURL: previewURL,
         genreName: genreName,
       });
+      
+      const url = "https://api.lyrics.ovh/v1/" +artistName +"/" +songTitle; 
+
+         $.ajax({
+             url: url, 
+             method:"GET"
+         }).then(function(lyrics){
+           console.log(lyrics);
+          let lyrics2 = lyrics.lyrics;
+          console.log(lyrics2);
+            //  $("#lyricHeader").text(songTitle)
+            //  $("#lyricZone").text(lyrics);
+            database.ref("/lyrics").push({
+              artistName: artistName,
+              songTitle: songTitle,
+              lyrics: lyrics2
+            });
+          });
+      
     };
   });
 });
 
+// let artistName = "";
+// let songTitle="";
+
+database.ref("/lyrics").on("child_added", function(data){
+  let lyrics = data.val().lyrics;
+  console.log(lyrics);
+  var newRow5 = $("<tr>");
+  var newTableData5 = $("<td>").text(lyrics);
+  newRow5.append(newTableData5);
+  $("#lyrics").append(newRow5);
+})
 database.ref("/tracks").on("child_added", function(snapshot) {
   console.log("this is snapshot: ", snapshot.val().songTitle);
   let songTitle = snapshot.val().songTitle;
@@ -175,6 +207,13 @@ database.ref("/tracks").on("child_added", function(snapshot) {
   let trackId = snapshot.val().trackId;
   let previewURL = snapshot.val().previewURL;
   let genreName = snapshot.val().genreName;
+
+  
+  // const url = "https://api.lyrics.ovh/v1/" + artistName + "/" + songTitle;
+  // var encodedUrl = encodeURI(url)
+  // console.log(url);
+  // console.log(encodedUrl);
+  // getLyrics();
 
   //the next two lines of code need to be replaced with Ibrahim's code
   var newRow = $("<tr>");
@@ -204,8 +243,7 @@ database.ref("/tracks").on("child_added", function(snapshot) {
   newRow3.append(newTableData3);
   $("#previewURL").append(newRow3);
 });
-//the line below ends the on document ready function
-});
+
 
 //get lyrics
 // created function to get song by title making an ajax call to the indicated database
@@ -234,3 +272,21 @@ function getSongs(songTitle){
          });
      });
  };
+// function getLyrics(songTitle){
+//     // created url variable to call song from returned array from database also making an ajax call. 
+    // const url = "https://api.lyrics.ovh/v1/" +artistName +"/" +songTitle; 
+
+//     let lyrics = (response.lyrics);
+
+    //      $.ajax({
+    //          url: url, 
+    //          method:"GET"
+    //      }).then(function(lyrics){
+    //        console.log(lyrics);
+    //          $("#lyricHeader").text(songTitle)
+    //          $("#lyricZone").text(lyrics);
+    //      });
+    //  };
+
+//the line below ends the on document ready function
+});
