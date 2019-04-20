@@ -25,6 +25,7 @@ connected.on("value", function (snapshot) {
 
 $(document).ready(function () {
 
+
   //see how many connections there are to the app
   connections.on("value", function (snapshot) {
     $("#connections").text(snapshot.numChildren());
@@ -32,58 +33,66 @@ $(document).ready(function () {
 
   new WOW().init();
 
-  //napster user login
+  //napster user login, provided by napster API examples (https://developer.napster.com/examples)
   const width = 700;
   const height = 400;
   const left = (screen.width / 2) - (width / 2);
-  // const top = (screen.height / 2) - (height / 2);
+  const top = (screen.height / 2) - (height / 2);
   const $loginButton = $('#btn-login');
   const $loginSection = $('#login-section');
   const $result = $('#result');
   const templateSource = document.getElementById('result-template').innerHTML
   const resultsTemplate = Handlebars.compile(templateSource);
-
+  
   const napsterAPI = 'https://api.napster.com';
   const APIKEY = 'ZmNiNDU0OGQtZDBhYS00OWI4LTg3ZWItZjc2MTkyY2EwNzgy';
   const oauthURL = `${napsterAPI}/oauth/authorize?client_id=${APIKEY}&response_type=code`;
-
+  
   const REDIRECT_URI = 'https://iaiqbal.github.io/Project-1/';
-
-  function fetchUserData(accessToken) {
+  
+  function fetchUserData (accessToken) {
     return $.ajax({
       url: `${napsterAPI}/v2.1/me`,
       headers: {
         'Authorization': 'Bearer ' + accessToken
       }
-    });
+    });	
   }
+  
+  function login() {
+    window.addEventListener('message',(event) => {
+      var hash = JSON.parse(event.data);
+      if (hash.type === 'access_token') {
+        fetchUserData(hash.access_token)
+          .then((data) => {
+            $loginSection.hide();
+            $result.html(resultsTemplate(data.me));
+            $result.show();
+          });
+      }
+    }, false);
+   
+    window.open(
+      `${oauthURL}&redirect_uri=${REDIRECT_URI}`,
+      'Napster',
+      `menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=${width},height=${height},top=${top}, left=${left}`
+    );
+  };
+  
+  $loginButton.click(() => {
+   login();
+  })
 
-  // function login() {
-  //   window.addEventListener('message', (event) => {
-  //     var hash = JSON.parse(event.data);
-  //     if (hash.type === 'access_token') {
-  //       fetchUserData(hash.access_token)
-  //         .then((data) => {
-  //           $loginSection.hide();
-  //           $result.html(resultsTemplate(data.me));
-  //           $result.show();
-  //         });
-  //     }
-  //   }, false);
+  $("#reset-btn").click(() => {
+    reset();
+});
 
-    // window.open(
-    //   `${oauthURL}&redirect_uri=${REDIRECT_URI}`,
-    //   'Napster',
-    //   `menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=${width},height=${height}, left=${left}`
-    // );
-  });
+function reset() {
+  database.ref("/tracks").remove();
+  $("td").empty();
+};
 
-  // $loginButton.click(() => {
-  //   login();
-  //   console.log("login button was clicked");
-  // })
 
-  //query napster for genre list and push to firebase
  //query napster for genre list and push to firebase
 const genreQueryUrl = "https://api.napster.com/v2.2/genres?apikey=ZmNiNDU0OGQtZDBhYS00OWI4LTg3ZWItZjc2MTkyY2EwNzgy"
 
@@ -120,12 +129,13 @@ $.ajax({
   }
 });
 
+
 //on genre 'a' click grab the genreId attribute and use it in the query URL
 $("a").on("click", function (event) {
   genreId = $(this).attr("genreId");
   genreName = $(this).attr("genreName");
   console.log(genreId);
-  console.log("this should be genrename", genreName)
+  console.log("this should be genrename", genreName);
 
   //query napster for top tracks based on genre
   const playlistQueryUrl = "https://api.napster.com/v2.2/genres/" + genreId + "/tracks/top?apikey=ZmNiNDU0OGQtZDBhYS00OWI4LTg3ZWItZjc2MTkyY2EwNzgy"
@@ -151,15 +161,10 @@ $("a").on("click", function (event) {
         artistTitle: artistName,
         trackId: trackId,
         previewURL: previewURL,
-        genreName: genreName
-      })
-
-
-      
-    }
-
+        genreName: genreName,
+      });
+    };
   });
-
 });
 
 database.ref("/tracks").on("child_added", function(snapshot) {
@@ -169,6 +174,7 @@ database.ref("/tracks").on("child_added", function(snapshot) {
   let trackId = snapshot.val().trackId;
   let previewURL = snapshot.val().previewURL;
   let genreName = snapshot.val().genreName;
+
   //the next two lines of code need to be replaced with Ibrahim's code
   var newRow = $("<tr>");
   var newTableData = $("<td>").text(songTitle);
@@ -197,3 +203,30 @@ database.ref("/tracks").on("child_added", function(snapshot) {
   newRow3.append(newTableData3);
   $("#previewURL").append(newRow3);
 });
+//the line below ends the on document ready function
+});
+
+//get lyrics
+// created function to get song by title making an ajax call to the indicated database
+function getSongs(songTitle){
+    // created url variable to call song from returned array from database also making an ajax call. 
+    const artist= "Coldplay"
+    const title= "Adventure of a Lifetime"
+    const url = "https://api.lyrics.ovh/v1/Coldplay/Adventure of a Lifetime";
+    $.ajax({
+         url: url, 
+         method:"GET"
+     }).then(function(response){
+         console.log(response);
+        //Used filter method to compare selected song title queried from the URL with returned value in the response
+         const thisSong = response.filter(function(song){return song.title === songTitle})[0];
+// ajax call to get lyrics, embed song title in html using element id, embed song in html using element id.
+         $.ajax({
+             url: `${url}/${thisSong.id}/lyrics`, 
+             method:"GET"
+         }).then(function(lyrics){
+             $("#lyricHeader").text(songTitle)
+             $("#lyricZone").text(lyrics);
+         });
+     });
+ };
