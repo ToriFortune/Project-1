@@ -190,6 +190,15 @@ $("a").on("click", function (event) {
 
 // let artistName = "";
 // let songTitle="";
+
+database.ref("/lyrics").on("child_added", function(data){
+  let lyrics = data.val().lyrics;
+  console.log(lyrics);
+  var newRow5 = $("<tr>");
+  var newTableData5 = $("<td>").text(lyrics);
+  newRow5.append(newTableData5);
+  $("#lyrics").append(newRow5);
+})
 database.ref("/tracks").on("child_added", function(snapshot) {
   console.log("this is snapshot: ", snapshot.val().songTitle);
   let songTitle = snapshot.val().songTitle;
@@ -197,17 +206,14 @@ database.ref("/tracks").on("child_added", function(snapshot) {
   let trackId = snapshot.val().trackId;
   let previewURL = snapshot.val().previewURL;
   let genreName = snapshot.val().genreName;
-  let lyrics = snapshot.val().lyrics;
+
   
   // const url = "https://api.lyrics.ovh/v1/" + artistName + "/" + songTitle;
   // var encodedUrl = encodeURI(url)
   // console.log(url);
   // console.log(encodedUrl);
   // getLyrics();
-  var newRow5 = $("<tr>");
-  var newTableData5 = $("<td>").text(lyrics);
-  newRow5.append(newTableData5);
-  $("#lyrics").append(newRow5);
+
   //the next two lines of code need to be replaced with Ibrahim's code
   var newRow = $("<tr>");
   var newTableData = $("<td>").text(songTitle);
