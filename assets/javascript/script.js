@@ -168,8 +168,6 @@ $("a").on("click", function (event) {
       
       const url = "https://api.lyrics.ovh/v1/" +artistName +"/" +songTitle; 
 
-//     let lyrics = (response.lyrics);
-
          $.ajax({
              url: url, 
              method:"GET"
@@ -199,13 +197,17 @@ database.ref("/tracks").on("child_added", function(snapshot) {
   let trackId = snapshot.val().trackId;
   let previewURL = snapshot.val().previewURL;
   let genreName = snapshot.val().genreName;
+  let lyrics = snapshot.val().lyrics;
   
   // const url = "https://api.lyrics.ovh/v1/" + artistName + "/" + songTitle;
   // var encodedUrl = encodeURI(url)
   // console.log(url);
   // console.log(encodedUrl);
   // getLyrics();
-
+  var newRow5 = $("<tr>");
+  var newTableData5 = $("<td>").text(lyrics);
+  newRow5.append(newTableData5);
+  $("#lyrics").append(newRow5);
   //the next two lines of code need to be replaced with Ibrahim's code
   var newRow = $("<tr>");
   var newTableData = $("<td>").text(songTitle);
