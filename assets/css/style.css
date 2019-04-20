@@ -38,7 +38,7 @@
 
 #login {
     margin: 0 auto;
-    width: 300px;
+    /* width: 300px; */
 }
 
 #heading {
@@ -66,6 +66,6 @@
 }
 
 audio {
-    height: 14px;
+    height: 11px;
     width: 300px;
 }

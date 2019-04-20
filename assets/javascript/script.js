@@ -87,38 +87,11 @@ $(document).ready(function () {
     reset();
 });
 
-<<<<<<< HEAD
-  function login() {
-    window.addEventListener('message', (event) => {
-      var hash = JSON.parse(event.data);
-      if (hash.type === 'access_token') {
-        fetchUserData(hash.access_token)
-          .then((data) => {
-            $loginSection.hide();
-            $result.html(resultsTemplate(data.me));
-            $result.show();
-          });
-      }
-    }, false);
-
-    window.open(
-      `${oauthURL}&redirect_uri=${REDIRECT_URI}`,
-      'Napster',
-      `menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=${width},height=${height}, left=${left}`
-    );
-  });
-
-  $loginButton.click(() => {
-    login();
-    console.log("login button was clicked");
-  })
-=======
 function reset() {
   database.ref("/tracks").remove();
   $("td").empty();
 };
 
->>>>>>> 02e5ee38371afc599a405fad60bfb6a817b9a52a
 
  //query napster for genre list and push to firebase
 const genreQueryUrl = "https://api.napster.com/v2.2/genres?apikey=ZmNiNDU0OGQtZDBhYS00OWI4LTg3ZWItZjc2MTkyY2EwNzgy"
@@ -182,10 +155,11 @@ $("a").on("click", function (event) {
       console.log(response.tracks[i].id);
       let previewURL = (response.tracks[i].previewURL);
       console.log(previewURL);
+      console.log(artistName);
       console.log("this is genreName", genreName);
       database.ref("/tracks").push({
         songTitle: songTitle,
-        artistTitle: artistName,
+        artistName: artistName,
         trackId: trackId,
         previewURL: previewURL,
         genreName: genreName,
@@ -235,6 +209,9 @@ database.ref("/tracks").on("child_added", function(snapshot) {
 
 //get lyrics
 // created function to get song by title making an ajax call to the indicated database
+
+
+
 function getSongs(songTitle){
     // created url variable to call song from returned array from database also making an ajax call. 
     const artist= "Coldplay"
