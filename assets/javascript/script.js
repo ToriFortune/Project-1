@@ -124,6 +124,8 @@ $.ajax({
 $("a").on("click", function (event) {
   genreId = $(this).attr("genreId");
   genreName = $(this).attr("genreName");
+  // added bounce animation to genre buttons
+  $(this).addClass('animated bounce')
   console.log(genreId);
   console.log("this should be genrename", genreName)
 
@@ -203,3 +205,4 @@ database.ref("/tracks").on("child_added", function(snapshot) {
   $("#previewURL").append(songTitle);
   $("#previewURL").append(artistName);
 });
+new WOW().init();
