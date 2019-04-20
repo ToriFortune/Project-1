@@ -61,3 +61,11 @@
     text-align: center;
 }
 
+.table-responsive {
+    text-align: center;
+}
+
+audio {
+    height: 14px;
+    width: 300px;
+}
