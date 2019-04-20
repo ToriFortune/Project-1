@@ -134,6 +134,8 @@ $.ajax({
 $("a").on("click", function (event) {
   genreId = $(this).attr("genreId");
   genreName = $(this).attr("genreName");
+  // added bounce animation to genre buttons
+  $(this).addClass('animated bounce')
   console.log(genreId);
   console.log("this should be genrename", genreName);
 
@@ -158,7 +160,7 @@ $("a").on("click", function (event) {
       console.log("this is genreName", genreName);
       database.ref("/tracks").push({
         songTitle: songTitle,
-        artistTitle: artistName,
+        artistName: artistName,
         trackId: trackId,
         previewURL: previewURL,
         genreName: genreName,
@@ -210,6 +212,27 @@ database.ref("/tracks").on("child_added", function(snapshot) {
 // created function to get song by title making an ajax call to the indicated database
 function getSongs(songTitle){
     // created url variable to call song from returned array from database also making an ajax call. 
+   
+    const url = "https://api.lyrics.ovh/v1/" +artistName +"/" +songTitle;
+    $.ajax({
+      url:url,
+      method: "GET"
+    }).then (function(response){
+    console.log(response);
+    
+    })
+        //Used filter method to compare selected song title queried from the URL with returned value in the response
+         const thisSong = response.filter(function(song){return song.title === songTitle})[0];
+// // ajax call to get lyrics, embed song title in html using element id, embed song in html using element id.
+//          $.ajax({
+//              url: `${url}/${thisSong.id}/lyrics`, 
+//              method:"GET"
+//          }).then(function(lyrics){
+//              $("#lyricHeader").text(songTitle)
+//              $("#lyricZone").text(lyrics);
+//          });
+//      });
+//  };
     const artist= "Coldplay"
     const title= "Adventure of a Lifetime"
     const url = "https://api.lyrics.ovh/v1/Coldplay/Adventure of a Lifetime";
