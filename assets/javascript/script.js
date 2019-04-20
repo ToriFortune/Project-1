@@ -194,15 +194,10 @@ $("a").on("click", function (event) {
   // type = 'button' class= 'btn btn-lg btn-primary' data - toggle='popover' data - container='body' title = 'Popover title' data - placement='bottom' id = 'popoverid' data - content='lyrics' > Lyrics</button >
 database.ref("/lyrics").on("child_added", function(data){
   let lyrics = data.val().lyrics;
-  let popover = $("<button id = 'popoverid'>");
+  let popover = $("<a tabindex='0' class='btn btn-lg btn-primary role='button' data-toggle='popover' data-trigger='focus' title='Lyrics' id = 'popoverid'>Lyrics</a>");
   $("#popoverid").popover({
     placement: 'bottom',
-    title: 'lyrics',
     content: lyrics,
-    trigger: 'click'
-
-
-
   })
   $("#popoverid").attr("data-content", lyrics);
   console.log(lyrics);
