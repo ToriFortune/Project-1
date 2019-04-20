@@ -148,11 +148,19 @@ $("a").on("click", function (event) {
       console.log("this is genreName", genreName);
       database.ref("/tracks").push({
         songTitle: songTitle,
-        artistTitle: artistName,
+        artistName: artistName,
         trackId: trackId,
         previewURL: previewURL,
         genreName: genreName
       })
+const url = "https://api.lyrics.ovh/v1/" +artistName +"/" +songTitle;
+$.ajax({
+  url:url,
+  method: "GET"
+}).then (function(response){
+console.log(response);
+
+})
 
       var newRow = $("<tr>");
       var newTableData = $("<td>").text(songTitle);
@@ -193,5 +201,5 @@ database.ref("/tracks").on("child_added", function(snapshot) {
   let genreName = snapshot.val().genreName;
   //the next two lines of code need to be replaced with Ibrahim's code
   $("#previewURL").append(songTitle);
-  $("#previewURL").append(artistTitle);
+  $("#previewURL").append(artistName);
 });
