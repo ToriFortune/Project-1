@@ -11,7 +11,7 @@ firebase.initializeApp(config);
 
 const database = firebase.database();
 
-//see how many connections there are with fireBase
+//see how many connections there are with fireBase, FUTURE STATE to allow one user at a time
 let connections = database.ref("connections");
 
 let connected = database.ref(".info/connected");
@@ -33,273 +33,214 @@ $(document).ready(function () {
 
   new WOW().init();
 
-  //napster user login, provided by napster API examples (https://developer.napster.com/examples)
-  const width = 700;
-  const height = 400;
-  const left = (screen.width / 2) - (width / 2);
-  const top = (screen.height / 2) - (height / 2);
-  const $loginButton = $('#btn-login');
-  const $loginSection = $('#login-section');
-  const $result = $('#result');
-  const templateSource = document.getElementById('result-template').innerHTML
-  const resultsTemplate = Handlebars.compile(templateSource);
+  //FUTURE STATE - napster user login, provided by napster API examples (https://developer.napster.com/examples)
+  // const width = 700;
+  // const height = 400;
+  // const left = (screen.width / 2) - (width / 2);
+  // const top = (screen.height / 2) - (height / 2);
+  // const $loginButton = $('#btn-login');
+  // const $loginSection = $('#login-section');
+  // const $result = $('#result');
+  // const templateSource = document.getElementById('result-template').innerHTML
+  // const resultsTemplate = Handlebars.compile(templateSource);
   
-  const napsterAPI = 'https://api.napster.com';
-  const APIKEY = 'ZmNiNDU0OGQtZDBhYS00OWI4LTg3ZWItZjc2MTkyY2EwNzgy';
-  const oauthURL = `${napsterAPI}/oauth/authorize?client_id=${APIKEY}&response_type=code`;
+  // const napsterAPI = 'https://api.napster.com';
+  // const APIKEY = 'ZmNiNDU0OGQtZDBhYS00OWI4LTg3ZWItZjc2MTkyY2EwNzgy';
+  // const oauthURL = `${napsterAPI}/oauth/authorize?client_id=${APIKEY}&response_type=code`;
   
-  const REDIRECT_URI = 'https://iaiqbal.github.io/Project-1/';
+  // const REDIRECT_URI = 'https://iaiqbal.github.io/Project-1/';
   
-  function fetchUserData (accessToken) {
-    return $.ajax({
-      url: `${napsterAPI}/v2.1/me`,
-      headers: {
-        'Authorization': 'Bearer ' + accessToken
-      }
-    });	
-  }
+  // function fetchUserData (accessToken) {
+  //   return $.ajax({
+  //     url: `${napsterAPI}/v2.1/me`,
+  //     headers: {
+  //       'Authorization': 'Bearer ' + accessToken
+  //     }
+  //   });	
+  // }
   
-  function login() {
-    window.addEventListener('message',(event) => {
-      var hash = JSON.parse(event.data);
-      if (hash.type === 'access_token') {
-        fetchUserData(hash.access_token)
-          .then((data) => {
-            $loginSection.hide();
-            $result.html(resultsTemplate(data.me));
-            $result.show();
-          });
-      }
-    }, false);
+  // function login() {
+  //   window.addEventListener('message',(event) => {
+  //     var hash = JSON.parse(event.data);
+  //     if (hash.type === 'access_token') {
+  //       fetchUserData(hash.access_token)
+  //         .then((data) => {
+  //           $loginSection.hide();
+  //           $result.html(resultsTemplate(data.me));
+  //           $result.show();
+  //         });
+  //     }
+  //   }, false);
    
-    window.open(
-      `${oauthURL}&redirect_uri=${REDIRECT_URI}`,
-      'Napster',
-      `menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=${width},height=${height},top=${top}, left=${left}`
-    );
-  };
+  //   window.open(
+  //     `${oauthURL}&redirect_uri=${REDIRECT_URI}`,
+  //     'Napster',
+  //     `menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=${width},height=${height},top=${top}, left=${left}`
+  //   );
+  // };
   
-  $loginButton.click(() => {
-   login();
-  })
+  // $loginButton.click(() => {
+  //  login();
+  // })
+  //This ends the FUTURE STATE napster login code
 
   $("#reset-btn").click(() => {
     reset();
-});
+  });
 
-function reset() {
-  database.ref("/tracks").remove();
-  $("td").empty();
-};
+  function reset() {
+    database.ref("/tracks").remove();
+    database.ref("/lyrics").remove();
+    $("tr").remove();
+  };
 
 
  //query napster for genre list and push to firebase
-const genreQueryUrl = "https://api.napster.com/v2.2/genres?apikey=ZmNiNDU0OGQtZDBhYS00OWI4LTg3ZWItZjc2MTkyY2EwNzgy"
+  const genreQueryUrl = "https://api.napster.com/v2.2/genres?apikey=ZmNiNDU0OGQtZDBhYS00OWI4LTg3ZWItZjc2MTkyY2EwNzgy"
 
-$.ajax({
-  url: genreQueryUrl,
-  method: "GET"
-}).then(function (data) {
-  console.log("this is the response: " + data.genres[0].id);
-  let genres = (data.genres);
-  for (j = 0; j < genres.length; j++) {
-    console.log(genres[j].id);
-    let genreId = genres[j].id;
-    console.log(genres[j].name);
-    let genreName = genres[j].name;
-    if (genreName === "Classical") {
+  $.ajax({
+    url: genreQueryUrl,
+    method: "GET"
+  }).then(function (data) {
+    console.log("this is the response: " + data.genres[0].id);
+    let genres = (data.genres);
+    for (j = 0; j < genres.length; j++) {
+      console.log(genres[j].id);
+      let genreId = genres[j].id;
+      console.log(genres[j].name);
+      let genreName = genres[j].name;
+      if (genreName === "Classical") {
       $("#classical-btn").attr("genreId", genreId);
       $("#classical-btn").attr("genreName", genreName)
-    } else if (genreName === "Pop") {
+      } 
+      else if (genreName === "Pop") {
       $("#pop-btn").attr("genreId", genreId);
       $("#pop-btn").attr("genreName", genreName)
-    } else if (genreName === "Rap/Hip-Hop") {
+      } 
+      else if (genreName === "Rap/Hip-Hop") {
       $("#hiphop-btn").attr("genreId", genreId);
       $("#hiphop-btn").attr("genreName", genreName)
-    } else if (genreName === "Rock") {
+      } 
+      else if (genreName === "Rock") {
       $("#rock-btn").attr("genreId", genreId);
       $("#rock-btn").attr("genreName", genreName)
-    } else if (genreName === "Electronic") {
+      } 
+      else if (genreName === "Electronic") {
       $("#edm-btn").attr("genreId", genreId);
       $("#edm-btn").attr("genreName", genreName)
-    } else if (genreName === "Country") {
+      } 
+      else if (genreName === "Country") {
       $("#country-btn").attr("genreId", genreId);
       $("#country-btn").attr("genreName", genreName)
-    };
-  }
-});
+      };
+    }
+  });
 
 
 //on genre 'a' click grab the genreId attribute and use it in the query URL
-$("a").on("click", function (event) {
-  genreId = $(this).attr("genreId");
-  genreName = $(this).attr("genreName");
-  // added bounce animation to genre buttons
-  $(this).addClass('animated bounce')
-  console.log(genreId);
-  console.log("this should be genrename", genreName);
-
-  //query napster for top tracks based on genre
-  const playlistQueryUrl = "https://api.napster.com/v2.2/genres/" + genreId + "/tracks/top?apikey=ZmNiNDU0OGQtZDBhYS00OWI4LTg3ZWItZjc2MTkyY2EwNzgy"
-
-  $.ajax({
-    url: playlistQueryUrl,
-    method: "GET"
-  }).then(function (response) {
-    trackDetails = response.tracks;
-    console.log("this is what napster returns", response);
+  $("button").on("click", function (event) {
+    genreId = $(this).attr("genreId");
+    genreName = $(this).attr("genreName");
+    // added bounce animation to genre buttons
+    $(this).addClass('animated bounce')
     console.log(genreId);
-    for (i = 0; i < trackDetails.length; i++) {
-      let songTitle = (response.tracks[i].name);
-      let artistName = (response.tracks[i].artistName);
-      console.log(response.tracks[i].artistName);
-      let trackId = (response.tracks[i].id);
-      console.log(response.tracks[i].id);
-      let previewURL = (response.tracks[i].previewURL);
-      console.log(previewURL);
-      console.log(artistName);
-      console.log("this is genreName", genreName);
-      database.ref("/tracks").push({
-        songTitle: songTitle,
-        artistName: artistName,
-        trackId: trackId,
-        previewURL: previewURL,
-        genreName: genreName,
-      });
-      
-      const url = "https://api.lyrics.ovh/v1/" +artistName +"/" +songTitle; 
+    console.log("this should be genrename", genreName);
 
-         $.ajax({
-             url: url, 
-             method:"GET"
-         }).then(function(lyrics){
-           console.log(lyrics);
+    //query napster for top tracks based on genre
+    const playlistQueryUrl = "https://api.napster.com/v2.2/genres/" + genreId + "/tracks/top?apikey=ZmNiNDU0OGQtZDBhYS00OWI4LTg3ZWItZjc2MTkyY2EwNzgy"
+
+    $.ajax({
+      url: playlistQueryUrl,
+      method: "GET"
+    }).then(function (response) {
+      trackDetails = response.tracks;
+      console.log("this is what napster returns", response);
+      console.log(genreId);
+      for (i = 0; i < trackDetails.length; i++) {
+        let songTitle = (response.tracks[i].name);
+        let artistName = (response.tracks[i].artistName);
+        console.log(response.tracks[i].artistName);
+        let trackId = (response.tracks[i].id);
+        console.log(response.tracks[i].id);
+        let previewURL = (response.tracks[i].previewURL);
+        console.log(previewURL);
+        console.log(artistName);
+        console.log("this is genreName", genreName);
+        const url = "https://api.lyrics.ovh/v1/" +artistName +"/" +songTitle; 
+
+        $.ajax({
+          url: url, 
+          method:"GET"
+        }).then(function(lyrics){
+          console.log(lyrics);
           let lyrics2 = lyrics.lyrics;
           console.log(lyrics2);
-            //  $("#lyricHeader").text(songTitle)
-            //  $("#lyricZone").text(lyrics);
-            database.ref("/lyrics").push({
-              artistName: artistName,
-              songTitle: songTitle,
-              lyrics: lyrics2
-            });
+          console.log(songTitle);
+            
+          database.ref("/lyrics").push({
+            artistName: artistName,
+            songTitle: songTitle,
+            lyrics: lyrics2
           });
-      
-    };
+        });
+        database.ref("/tracks").push({
+          songTitle: songTitle,
+          artistName: artistName,
+          trackId: trackId,
+          previewURL: previewURL,
+          genreName: genreName,
+        });
+      };
+    });
   });
-});
 
-// let artistName = "";
-// let songTitle="";
-  // type = 'button' class= 'btn btn-lg btn-primary' data - toggle='popover' data - container='body' title = 'Popover title' data - placement='bottom' id = 'popoverid' data - content='lyrics' > Lyrics</button >
-database.ref("/lyrics").on("child_added", function(data){
-  let lyrics = data.val().lyrics;
-  let popover = $("<button id = 'popoverid'>");
-  $("#popoverid").popover({
-    placement: 'bottom',
-    title: 'lyrics',
-    content: lyrics,
-    trigger: 'click'
+  database.ref("/lyrics").on("child_added", function(data){
+    let lyrics = data.val().lyrics;
+    console.log(lyrics);
+  });
 
+  database.ref("/tracks").on("child_added", function(snapshot) {
+    console.log("this is snapshot: ", snapshot.val().songTitle);
+    let songTitle = snapshot.val().songTitle;
+    console.log(songTitle);
+    let artistName = snapshot.val().artistName;
+    let trackId = snapshot.val().trackId;
+    let previewURL = snapshot.val().previewURL;
+    let genreName = snapshot.val().genreName;
 
+  var ref = database.ref("/lyrics");
+  ref.orderByChild("songTitle").equalTo(songTitle).on("child_added", function(snapshot) {
+    let songTitle2 = snapshot.val().songTitle;
+    
+    let lyricsSnapshot = snapshot.val().lyrics;
+  // console.log(snapshot.key);
+  // console.log(songTitle);
+    console.log(lyricsSnapshot);
 
-  })
-  $("#popoverid").attr("data-content", lyrics);
-  console.log(lyrics);
-  var newRow5 = $("<tr>");
-  var newTableData5 = $("<td>").append(popover);
-  newRow5.append(newTableData5);
-  $("#lyrics").append(newRow5);
-  // popover.attr()
-});
+    let popover = $("<a tabindex='0' class='btn btn-lg btn-primary popoverclass' role='button' data-toggle='popover' data-trigger='focus' data-placement='bottom' title='Lyrics'>Lyrics</a>");
+    
+    $(".popoverclass").popover({
+      content: lyricsSnapshot,
+    });
 
-database.ref("/tracks").on("child_added", function(snapshot) {
-  console.log("this is snapshot: ", snapshot.val().songTitle);
-  let songTitle = snapshot.val().songTitle;
-  let artistName = snapshot.val().artistName;
-  let trackId = snapshot.val().trackId;
-  let previewURL = snapshot.val().previewURL;
-  let genreName = snapshot.val().genreName;
+    let audio = $("<audio controls>");
+      audio.attr("id", "sourceid" + i);
+      audio.attr("src", previewURL);
+      audio.wrapInner("<source id='sourceid'>");
+      console.log(songTitle2);
+      console.log(songTitle);
+      
+    const newRow = $("<tr>").append(
+        $("<td>").text(songTitle),
+        $("<td>").text(artistName),
+        $("<td>").text(genreName),
+        $("<td>").html(audio),
+        $("<td>").html(popover),
+      );
+      $("#song-table > tbody").append(newRow);
+  });
 
-  
-  // const url = "https://api.lyrics.ovh/v1/" + artistName + "/" + songTitle;
-  // var encodedUrl = encodeURI(url)
-  // console.log(url);
-  // console.log(encodedUrl);
-  // getLyrics();
-
-  //the next two lines of code need to be replaced with Ibrahim's code
-  var newRow = $("<tr>");
-  var newTableData = $("<td>").text(songTitle);
-  newRow.append(newTableData);
-  $("#songs").append(newRow);
-
-  var newRow2 = $("<tr>");
-  var newTableData2 = $("<td>").text(artistName);
-  newRow2.append(newTableData2);
-  $("#artist").append(newRow2);
-
-  var newRow4 = $("<tr>");
-  var newTableData4 = $("<td>").text(genreName);
-  newRow4.append(newTableData4);
-  $("#genres").append(newRow4);
-
-  let audio = $("<audio controls>");
-  audio.attr("id", "sourceid" + i);
-  audio.attr("src", previewURL);
-  // audio.wrapInner("<source id='sourceid'>");
-
-  console.log(audio);
-
-  var newRow3 = $("<tr>");
-  var newTableData3 = $("<td>").wrapInner(audio);
-  newRow3.append(newTableData3);
-  $("#previewURL").append(newRow3);
-});
-
-
-//get lyrics
-// created function to get song by title making an ajax call to the indicated database
-
-
-
-function getSongs(songTitle){
-    // created url variable to call song from returned array from database also making an ajax call. 
-    const artist= "Coldplay"
-    const title= "Adventure of a Lifetime"
-    const url = "https://api.lyrics.ovh/v1/Coldplay/Adventure of a Lifetime";
-    $.ajax({
-         url: url, 
-         method:"GET"
-     }).then(function(response){
-         console.log(response);
-        //Used filter method to compare selected song title queried from the URL with returned value in the response
-         const thisSong = response.filter(function(song){return song.title === songTitle})[0];
-// ajax call to get lyrics, embed song title in html using element id, embed song in html using element id.
-         $.ajax({
-             url: `${url}/${thisSong.id}/lyrics`, 
-             method:"GET"
-         }).then(function(lyrics){
-             $("#lyricHeader").text(songTitle)
-             $("#lyricZone").text(lyrics);
-         });
-     });
- };
-// function getLyrics(songTitle){
-//     // created url variable to call song from returned array from database also making an ajax call. 
-    // const url = "https://api.lyrics.ovh/v1/" +artistName +"/" +songTitle; 
-
-//     let lyrics = (response.lyrics);
-
-    //      $.ajax({
-    //          url: url, 
-    //          method:"GET"
-    //      }).then(function(lyrics){
-    //        console.log(lyrics);
-    //          $("#lyricHeader").text(songTitle)
-    //          $("#lyricZone").text(lyrics);
-    //      });
-    //  };
+  });
 
 //the line below ends the on document ready function
 });
