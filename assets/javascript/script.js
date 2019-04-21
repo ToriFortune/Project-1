@@ -89,6 +89,7 @@ $(document).ready(function () {
 
 function reset() {
   database.ref("/tracks").remove();
+  database.ref("/lyrics").remove();
   $("td").empty();
 };
 
