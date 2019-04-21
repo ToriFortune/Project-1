@@ -33,7 +33,7 @@ $(document).ready(function () {
 
   new WOW().init();
 
-  //future state - napster user login, provided by napster API examples (https://developer.napster.com/examples)
+  //FUTURE STATE - napster user login, provided by napster API examples (https://developer.napster.com/examples)
   // const width = 700;
   // const height = 400;
   // const left = (screen.width / 2) - (width / 2);
@@ -82,7 +82,7 @@ $(document).ready(function () {
   // $loginButton.click(() => {
   //  login();
   // })
-  //This ends the future state napster login code
+  //This ends the FUTURE STATE napster login code
 
   $("#reset-btn").click(() => {
     reset();
@@ -166,14 +166,6 @@ $("button").on("click", function (event) {
       console.log(previewURL);
       console.log(artistName);
       console.log("this is genreName", genreName);
-      database.ref("/tracks").push({
-        songTitle: songTitle,
-        artistName: artistName,
-        trackId: trackId,
-        previewURL: previewURL,
-        genreName: genreName,
-      });
-      
       const url = "https://api.lyrics.ovh/v1/" +artistName +"/" +songTitle; 
 
          $.ajax({
@@ -191,6 +183,15 @@ $("button").on("click", function (event) {
               lyrics: lyrics2
             });
           });
+      database.ref("/tracks").push({
+        songTitle: songTitle,
+        artistName: artistName,
+        trackId: trackId,
+        previewURL: previewURL,
+        genreName: genreName,
+      });
+      
+      
       
     };
   });
@@ -199,14 +200,13 @@ $("button").on("click", function (event) {
 database.ref("/lyrics").on("child_added", function(data){
   let lyrics = data.val().lyrics;
   console.log(lyrics);
-  
-
 });
 
 database.ref("/tracks").on("child_added", function(snapshot) {
   console.log("this is snapshot: ", snapshot.val().songTitle);
   let songTitle = snapshot.val().songTitle;
-  console.log(songTitle);  let artistName = snapshot.val().artistName;
+  console.log(songTitle);
+  let artistName = snapshot.val().artistName;
   let trackId = snapshot.val().trackId;
   let previewURL = snapshot.val().previewURL;
   let genreName = snapshot.val().genreName;
@@ -214,24 +214,24 @@ database.ref("/tracks").on("child_added", function(snapshot) {
   var ref = database.ref("/lyrics");
   ref.orderByChild("songTitle").equalTo(songTitle).on("child_added", function(snapshot) {
     let songTitle2 = snapshot.val().songTitle;
-    console.log(songTitle2)
+    
     let lyricsSnapshot = snapshot.val().lyrics;
   // console.log(snapshot.key);
   // console.log(songTitle);
   console.log(lyricsSnapshot);
+
   let popover = $("<a tabindex='0' class='btn btn-lg btn-primary popoverclass' role='button' data-toggle='popover' data-trigger='focus' data-placement='bottom' title='Lyrics'>Lyrics</a>");
   $(".popoverclass").popover({
     content: lyricsSnapshot,
   });
 
-  // var newRow5 = $("<tr>");
-  // var newTableData5 = $("<td>").append(popover)
-  // newRow5.append(newTableData5);
-  // $("#lyrics").append(newRow5);
   let audio = $("<audio controls>");
     audio.attr("id", "sourceid" + i);
     audio.attr("src", previewURL);
     audio.wrapInner("<source id='sourceid'>");
+    console.log(songTitle2);
+    console.log(songTitle);
+    
   const newRow = $("<tr>").append(
     $("<td>").text(songTitle),
     $("<td>").text(artistName),
@@ -241,40 +241,7 @@ database.ref("/tracks").on("child_added", function(snapshot) {
   );
   $("#song-table > tbody").append(newRow);
 });
-  
-  // const url = "https://api.lyrics.ovh/v1/" + artistName + "/" + songTitle;
-  // var encodedUrl = encodeURI(url)
-  // console.log(url);
-  // console.log(encodedUrl);
-  // getLyrics();
 
-  //the next two lines of code need to be replaced with Ibrahim's code
-  // var newRow = $("<tr>");
-  // var newTableData = $("<td>").text(songTitle);
-  // newRow.append(newTableData);
-  // $("#songs").append(newRow);
-
-  // var newRow2 = $("<tr>");
-  // var newTableData2 = $("<td>").text(artistName);
-  // newRow2.append(newTableData2);
-  // $("#artist").append(newRow2);
-
-  // var newRow4 = $("<tr>");
-  // var newTableData4 = $("<td>").text(genreName);
-  // newRow4.append(newTableData4);
-  // $("#genres").append(newRow4);
-
-  // let audio = $("<audio controls>");
-  // audio.attr("id", "sourceid" + i);
-  // audio.attr("src", previewURL);
-  // // audio.wrapInner("<source id='sourceid'>");
-
-  // console.log(audio);
-
-  // var newRow3 = $("<tr>");
-  // var newTableData3 = $("<td>").wrapInner(audio);
-  // newRow3.append(newTableData3);
-  // $("#previewURL").append(newRow3);
 });
 
 //the line below ends the on document ready function
