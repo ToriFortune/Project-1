@@ -176,8 +176,6 @@ $("a").on("click", function (event) {
            console.log(lyrics);
           let lyrics2 = lyrics.lyrics;
           console.log(lyrics2);
-            //  $("#lyricHeader").text(songTitle)
-            //  $("#lyricZone").text(lyrics);
             database.ref("/lyrics").push({
               artistName: artistName,
               songTitle: songTitle,
@@ -194,18 +192,18 @@ $("a").on("click", function (event) {
   // type = 'button' class= 'btn btn-lg btn-primary' data - toggle='popover' data - container='body' title = 'Popover title' data - placement='bottom' id = 'popoverid' data - content='lyrics' > Lyrics</button >
 database.ref("/lyrics").on("child_added", function(data){
   let lyrics = data.val().lyrics;
-  let popover = $("<a tabindex='0' class='btn btn-lg btn-primary role='button' data-toggle='popover' data-trigger='focus' title='Lyrics' id = 'popoverid'>Lyrics</a>");
-  $("#popoverid").popover({
-    placement: 'bottom',
-    content: lyrics,
-  })
-  $("#popoverid").attr("data-content", lyrics);
+  // console.log(lyrics);
   console.log(lyrics);
+  let popover = $("<a tabindex='0' class='btn btn-lg btn-primary popoverclass' role='button' data-toggle='popover' data-trigger='focus' data-placement='bottom' title='Lyrics'>Lyrics</a>");
+  $(".popoverclass").popover({
+    content: lyrics,
+  });
+  
   var newRow5 = $("<tr>");
-  var newTableData5 = $("<td>").append(popover);
+  var newTableData5 = $("<td>").append(popover)
   newRow5.append(newTableData5);
   $("#lyrics").append(newRow5);
-  // popover.attr()
+
 });
 
 database.ref("/tracks").on("child_added", function(snapshot) {
