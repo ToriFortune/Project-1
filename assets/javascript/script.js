@@ -199,25 +199,38 @@ $("button").on("click", function (event) {
 database.ref("/lyrics").on("child_added", function(data){
   let lyrics = data.val().lyrics;
   console.log(lyrics);
-  let popover = $("<a tabindex='0' class='btn btn-lg btn-primary popoverclass' role='button' data-toggle='popover' data-trigger='focus' data-placement='bottom' title='Lyrics'>Lyrics</a>");
-  $(".popoverclass").popover({
-    content: lyrics,
-  });
-  var newRow5 = $("<tr>");
-  var newTableData5 = $("<td>").append(popover)
-  newRow5.append(newTableData5);
-  $("#lyrics").append(newRow5);
+  
 
 });
 
 database.ref("/tracks").on("child_added", function(snapshot) {
   console.log("this is snapshot: ", snapshot.val().songTitle);
   let songTitle = snapshot.val().songTitle;
-  let artistName = snapshot.val().artistName;
+  console.log(songTitle);  let artistName = snapshot.val().artistName;
   let trackId = snapshot.val().trackId;
   let previewURL = snapshot.val().previewURL;
   let genreName = snapshot.val().genreName;
 
+  var ref = database.ref("/lyrics");
+  ref.orderByChild("songTitle").equalTo(songTitle).on("child_added", function(snapshot) {
+    let songTitle2 = snapshot.val().songTitle;
+    console.log(songTitle2)
+    let lyricsSnapshot = snapshot.val().lyrics;
+  // console.log(snapshot.key);
+  // console.log(songTitle);
+  console.log(lyricsSnapshot);
+  
+  console.log(lyrics);
+  let popover = $("<a tabindex='0' class='btn btn-lg btn-primary popoverclass' role='button' data-toggle='popover' data-trigger='focus' data-placement='bottom' title='Lyrics'>Lyrics</a>");
+  $(".popoverclass").popover({
+    content: lyricsSnapshot,
+  });
+
+  var newRow5 = $("<tr>");
+  var newTableData5 = $("<td>").append(popover)
+  newRow5.append(newTableData5);
+  $("#lyrics").append(newRow5);
+});
   
   // const url = "https://api.lyrics.ovh/v1/" + artistName + "/" + songTitle;
   // var encodedUrl = encodeURI(url)
@@ -253,50 +266,6 @@ database.ref("/tracks").on("child_added", function(snapshot) {
   newRow3.append(newTableData3);
   $("#previewURL").append(newRow3);
 });
-
-
-//get lyrics
-// created function to get song by title making an ajax call to the indicated database
-
-
-
-// function getSongs(songTitle){
-//     // created url variable to call song from returned array from database also making an ajax call. 
-//     const artist= "Coldplay"
-//     const title= "Adventure of a Lifetime"
-//     const url = "https://api.lyrics.ovh/v1/Coldplay/Adventure of a Lifetime";
-//     $.ajax({
-//          url: url, 
-//          method:"GET"
-//      }).then(function(response){
-//          console.log(response);
-        //Used filter method to compare selected song title queried from the URL with returned value in the response
-        //  const thisSong = response.filter(function(song){return song.title === songTitle})[0];
-// ajax call to get lyrics, embed song title in html using element id, embed song in html using element id.
-//          $.ajax({
-//              url: `${url}/${thisSong.id}/lyrics`, 
-//              method:"GET"
-//          }).then(function(lyrics){
-//              $("#lyricHeader").text(songTitle)
-//              $("#lyricZone").text(lyrics);
-//          });
-//      });
-//  };
-// function getLyrics(songTitle){
-//     // created url variable to call song from returned array from database also making an ajax call. 
-    // const url = "https://api.lyrics.ovh/v1/" +artistName +"/" +songTitle; 
-
-//     let lyrics = (response.lyrics);
-
-    //      $.ajax({
-    //          url: url, 
-    //          method:"GET"
-    //      }).then(function(lyrics){
-    //        console.log(lyrics);
-    //          $("#lyricHeader").text(songTitle)
-    //          $("#lyricZone").text(lyrics);
-    //      });
-    //  };
 
 //the line below ends the on document ready function
 });
