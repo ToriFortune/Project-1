@@ -91,7 +91,7 @@ $(document).ready(function () {
 function reset() {
   database.ref("/tracks").remove();
   database.ref("/lyrics").remove();
-  $("td").empty();
+  $("tr").remove();
 };
 
 
@@ -219,17 +219,27 @@ database.ref("/tracks").on("child_added", function(snapshot) {
   // console.log(snapshot.key);
   // console.log(songTitle);
   console.log(lyricsSnapshot);
-  
-  console.log(lyrics);
   let popover = $("<a tabindex='0' class='btn btn-lg btn-primary popoverclass' role='button' data-toggle='popover' data-trigger='focus' data-placement='bottom' title='Lyrics'>Lyrics</a>");
   $(".popoverclass").popover({
     content: lyricsSnapshot,
   });
 
-  var newRow5 = $("<tr>");
-  var newTableData5 = $("<td>").append(popover)
-  newRow5.append(newTableData5);
-  $("#lyrics").append(newRow5);
+  // var newRow5 = $("<tr>");
+  // var newTableData5 = $("<td>").append(popover)
+  // newRow5.append(newTableData5);
+  // $("#lyrics").append(newRow5);
+  let audio = $("<audio controls>");
+    audio.attr("id", "sourceid" + i);
+    audio.attr("src", previewURL);
+    audio.wrapInner("<source id='sourceid'>");
+  const newRow = $("<tr>").append(
+    $("<td>").text(songTitle),
+    $("<td>").text(artistName),
+    $("<td>").text(genreName),
+    $("<td>").html(audio),
+    $("<td>").html(popover),
+  );
+  $("#song-table > tbody").append(newRow);
 });
   
   // const url = "https://api.lyrics.ovh/v1/" + artistName + "/" + songTitle;
@@ -239,32 +249,32 @@ database.ref("/tracks").on("child_added", function(snapshot) {
   // getLyrics();
 
   //the next two lines of code need to be replaced with Ibrahim's code
-  var newRow = $("<tr>");
-  var newTableData = $("<td>").text(songTitle);
-  newRow.append(newTableData);
-  $("#songs").append(newRow);
+  // var newRow = $("<tr>");
+  // var newTableData = $("<td>").text(songTitle);
+  // newRow.append(newTableData);
+  // $("#songs").append(newRow);
 
-  var newRow2 = $("<tr>");
-  var newTableData2 = $("<td>").text(artistName);
-  newRow2.append(newTableData2);
-  $("#artist").append(newRow2);
+  // var newRow2 = $("<tr>");
+  // var newTableData2 = $("<td>").text(artistName);
+  // newRow2.append(newTableData2);
+  // $("#artist").append(newRow2);
 
-  var newRow4 = $("<tr>");
-  var newTableData4 = $("<td>").text(genreName);
-  newRow4.append(newTableData4);
-  $("#genres").append(newRow4);
+  // var newRow4 = $("<tr>");
+  // var newTableData4 = $("<td>").text(genreName);
+  // newRow4.append(newTableData4);
+  // $("#genres").append(newRow4);
 
-  let audio = $("<audio controls>");
-  audio.attr("id", "sourceid" + i);
-  audio.attr("src", previewURL);
-  // audio.wrapInner("<source id='sourceid'>");
+  // let audio = $("<audio controls>");
+  // audio.attr("id", "sourceid" + i);
+  // audio.attr("src", previewURL);
+  // // audio.wrapInner("<source id='sourceid'>");
 
-  console.log(audio);
+  // console.log(audio);
 
-  var newRow3 = $("<tr>");
-  var newTableData3 = $("<td>").wrapInner(audio);
-  newRow3.append(newTableData3);
-  $("#previewURL").append(newRow3);
+  // var newRow3 = $("<tr>");
+  // var newTableData3 = $("<td>").wrapInner(audio);
+  // newRow3.append(newTableData3);
+  // $("#previewURL").append(newRow3);
 });
 
 //the line below ends the on document ready function
