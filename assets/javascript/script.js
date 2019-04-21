@@ -33,55 +33,56 @@ $(document).ready(function () {
 
   new WOW().init();
 
-  //napster user login, provided by napster API examples (https://developer.napster.com/examples)
-  const width = 700;
-  const height = 400;
-  const left = (screen.width / 2) - (width / 2);
-  const top = (screen.height / 2) - (height / 2);
-  const $loginButton = $('#btn-login');
-  const $loginSection = $('#login-section');
-  const $result = $('#result');
-  const templateSource = document.getElementById('result-template').innerHTML
-  const resultsTemplate = Handlebars.compile(templateSource);
+  //future state - napster user login, provided by napster API examples (https://developer.napster.com/examples)
+  // const width = 700;
+  // const height = 400;
+  // const left = (screen.width / 2) - (width / 2);
+  // const top = (screen.height / 2) - (height / 2);
+  // const $loginButton = $('#btn-login');
+  // const $loginSection = $('#login-section');
+  // const $result = $('#result');
+  // const templateSource = document.getElementById('result-template').innerHTML
+  // const resultsTemplate = Handlebars.compile(templateSource);
   
-  const napsterAPI = 'https://api.napster.com';
-  const APIKEY = 'ZmNiNDU0OGQtZDBhYS00OWI4LTg3ZWItZjc2MTkyY2EwNzgy';
-  const oauthURL = `${napsterAPI}/oauth/authorize?client_id=${APIKEY}&response_type=code`;
+  // const napsterAPI = 'https://api.napster.com';
+  // const APIKEY = 'ZmNiNDU0OGQtZDBhYS00OWI4LTg3ZWItZjc2MTkyY2EwNzgy';
+  // const oauthURL = `${napsterAPI}/oauth/authorize?client_id=${APIKEY}&response_type=code`;
   
-  const REDIRECT_URI = 'https://iaiqbal.github.io/Project-1/';
+  // const REDIRECT_URI = 'https://iaiqbal.github.io/Project-1/';
   
-  function fetchUserData (accessToken) {
-    return $.ajax({
-      url: `${napsterAPI}/v2.1/me`,
-      headers: {
-        'Authorization': 'Bearer ' + accessToken
-      }
-    });	
-  }
+  // function fetchUserData (accessToken) {
+  //   return $.ajax({
+  //     url: `${napsterAPI}/v2.1/me`,
+  //     headers: {
+  //       'Authorization': 'Bearer ' + accessToken
+  //     }
+  //   });	
+  // }
   
-  function login() {
-    window.addEventListener('message',(event) => {
-      var hash = JSON.parse(event.data);
-      if (hash.type === 'access_token') {
-        fetchUserData(hash.access_token)
-          .then((data) => {
-            $loginSection.hide();
-            $result.html(resultsTemplate(data.me));
-            $result.show();
-          });
-      }
-    }, false);
+  // function login() {
+  //   window.addEventListener('message',(event) => {
+  //     var hash = JSON.parse(event.data);
+  //     if (hash.type === 'access_token') {
+  //       fetchUserData(hash.access_token)
+  //         .then((data) => {
+  //           $loginSection.hide();
+  //           $result.html(resultsTemplate(data.me));
+  //           $result.show();
+  //         });
+  //     }
+  //   }, false);
    
-    window.open(
-      `${oauthURL}&redirect_uri=${REDIRECT_URI}`,
-      'Napster',
-      `menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=${width},height=${height},top=${top}, left=${left}`
-    );
-  };
+  //   window.open(
+  //     `${oauthURL}&redirect_uri=${REDIRECT_URI}`,
+  //     'Napster',
+  //     `menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=${width},height=${height},top=${top}, left=${left}`
+  //   );
+  // };
   
-  $loginButton.click(() => {
-   login();
-  })
+  // $loginButton.click(() => {
+  //  login();
+  // })
+  //This ends the future state napster login code
 
   $("#reset-btn").click(() => {
     reset();
@@ -109,30 +110,35 @@ $.ajax({
     console.log(genres[j].name);
     let genreName = genres[j].name;
     if (genreName === "Classical") {
-      $("#classical-btn").attr("genreId", genreId);
-      $("#classical-btn").attr("genreName", genreName)
-    } else if (genreName === "Pop") {
-      $("#pop-btn").attr("genreId", genreId);
-      $("#pop-btn").attr("genreName", genreName)
-    } else if (genreName === "Rap/Hip-Hop") {
-      $("#hiphop-btn").attr("genreId", genreId);
-      $("#hiphop-btn").attr("genreName", genreName)
-    } else if (genreName === "Rock") {
-      $("#rock-btn").attr("genreId", genreId);
-      $("#rock-btn").attr("genreName", genreName)
-    } else if (genreName === "Electronic") {
-      $("#edm-btn").attr("genreId", genreId);
-      $("#edm-btn").attr("genreName", genreName)
-    } else if (genreName === "Country") {
-      $("#country-btn").attr("genreId", genreId);
-      $("#country-btn").attr("genreName", genreName)
+    $("#classical-btn").attr("genreId", genreId);
+    $("#classical-btn").attr("genreName", genreName)
+    } 
+    else if (genreName === "Pop") {
+    $("#pop-btn").attr("genreId", genreId);
+    $("#pop-btn").attr("genreName", genreName)
+    } 
+    else if (genreName === "Rap/Hip-Hop") {
+    $("#hiphop-btn").attr("genreId", genreId);
+    $("#hiphop-btn").attr("genreName", genreName)
+    } 
+    else if (genreName === "Rock") {
+    $("#rock-btn").attr("genreId", genreId);
+    $("#rock-btn").attr("genreName", genreName)
+    } 
+    else if (genreName === "Electronic") {
+    $("#edm-btn").attr("genreId", genreId);
+    $("#edm-btn").attr("genreName", genreName)
+    } 
+    else if (genreName === "Country") {
+    $("#country-btn").attr("genreId", genreId);
+    $("#country-btn").attr("genreName", genreName)
     };
   }
 });
 
 
 //on genre 'a' click grab the genreId attribute and use it in the query URL
-$("a").on("click", function (event) {
+$("button").on("click", function (event) {
   genreId = $(this).attr("genreId");
   genreName = $(this).attr("genreName");
   // added bounce animation to genre buttons
