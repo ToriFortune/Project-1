@@ -1,11 +1,14 @@
 .jumbotron {
     text-align: center;
     color: white;
+
+
 }
 
 #genrecontainer {
     margin-left: 18%;
 }
+
 
 .card-title {
     text-align: center;
@@ -49,17 +52,30 @@
     text-align: center;
 }
 
-.container {
-    font-family: 'Quattrocento Sans', sans-serif;
+#genrecontainer {
+    font-family: 'Poiret One', cursive;
 }
 
 .jumbotron {
-    font-family: 'Quattrocento Sans', sans-serif;
+    font-family: 'Poiret One', cursive;
 }
 
 #reset-section {
     text-align: center;
 }
+
+#reset-btn {
+    font-family: 'Poiret One', cursive;
+    font-size: 24px;
+}
+
+#results {
+    font-size: 20px;
+    font-family: 'Open Sans', sans-serif;
+    text-align: center;
+}
+
+
 
 .table-responsive {
     text-align: center;
@@ -68,4 +84,8 @@
 audio {
     height: 11px;
     width: 300px;
+}
+
+.popoverclass {
+    font-size: 2px;
 }
