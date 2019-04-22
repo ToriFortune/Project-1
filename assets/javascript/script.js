@@ -194,10 +194,10 @@ $(document).ready(function () {
     });
   });
 
-  database.ref("/lyrics").on("child_added", function(data){
-    let lyrics = data.val().lyrics;
-    console.log(lyrics);
-  });
+  // database.ref("/lyrics").on("child_added", function(data){
+  //   let lyrics = data.val().lyrics;
+  //   console.log(lyrics);
+  // });
 
   database.ref("/tracks").on("child_added", function(snapshot) {
     console.log("this is snapshot: ", snapshot.val().songTitle);
