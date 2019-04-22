@@ -91,7 +91,7 @@ $(document).ready(function () {
   function reset() {
     database.ref("/tracks").remove();
     database.ref("/lyrics").remove();
-    $("tr").remove();
+    $("#song-table").find("tr:gt(0)").remove();
   };
 
 
