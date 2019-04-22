@@ -217,11 +217,12 @@ $(document).ready(function () {
   // console.log(songTitle);
     console.log(lyricsSnapshot);
 
-    let popover = $("<a tabindex='0' class='btn btn-lg btn-primary popoverclass' role='button' data-toggle='popover' data-trigger='focus' data-placement='bottom' title='Lyrics'>Lyrics</a>");
+    let popover = $("<a tabindex='0' class='btn btn-lg btn-primary popoverclass wow jackInTheBox slow' role='button' data-toggle='popover' data-trigger='focus' data-placement='bottom' title='Lyrics'>Lyrics</a>");
     
     $(".popoverclass").popover({
       content: lyricsSnapshot,
     });
+
 
     let audio = $("<audio controls>");
       audio.attr("id", "sourceid" + i);
