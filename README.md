@@ -1,10 +1,11 @@
 Name of Project
 Musify2
-[Live Site](Put the deployed link here once you have it)
+[Live Site] 
+https://iaiqbal.github.io/Project-1/
 
 Project Summary
-Allow the user to explore their love of music. Through the classifiation of music genres, we will
-create a set playlist for the user based on their chosen genres.
+Allow the user to explore and learn more about genres of music. Through the classification of music genres, we will
+create a set playlist from napster of current top tracks from the user's selected genre(s). Users can listen to samples of the tracks on the playlist and even download the snipped to reference at a later time. Lyrics to the songs are also included for those that like to sing along.
 
 Developers
 Developer 1: Ibrahim Iqbal
@@ -24,7 +25,7 @@ LinkedIn: https://www.linkedin.com/in/angela-pizarras-25687814
 
 
 Animated Gifs/Pictures of App
-Place various screens of your app here after they have been built
+src = './assets/images'
 
 Tech Stack
 HTML
@@ -33,31 +34,35 @@ Bootstrap CSS
 Javascript
 JQuery
 google.firebase
+Popper
+
 
 APIs
-Last.FM
-Giphy
-Twitter
+Napster
+Lyrics.ovh
 
 MVP
-User is able to select genres by clicking on buttons
-Genre button values will be used to search in Last.FM
-Return results based on one or multiple genres selected
-Users should be able to play, stop and rewind songs on the playlist
-User should be able to delete songs on the playlist
-User can tweet about playlists
+- User is able to select genres by clicking on buttons
+- Genre button values will be used to search in Napster
+- Return results based on one or multiple genres selected
+- Users should be able to play, stop and rewind songs on the playlist
+- User should be able to delete the playlist and start over
+
 
 Stretch Goals
-select additional genres after playlist has been generated
-add additional songs to existing playlist
-allow user to set max number of songs
+- Add additional songs to existing playlist
+- Allow user to set max number of songs
 
 Future Development
-Whats been tabled
-Update this after the project has been completed
+- Rrandomize playlist
+- Login to napster to save playlists
+- Full song playback
+- Lyric words display as song plays, as in karaoke (animations)
+- Share playlists via social media sharing
+- Vote on playlist
 
 Credits/Resources
-Any credits you should list to resources you used
+Napster API Documentation and Examples
 
 
 
