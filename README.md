@@ -62,7 +62,7 @@ Future Development
 - Vote on playlist
 
 Credits/Resources
-Any credits you should list to resources you used
+Napster API Documentation and Examples
 
 
 
